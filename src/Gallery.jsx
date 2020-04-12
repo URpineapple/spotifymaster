@@ -25,7 +25,7 @@ export default class Gallery extends Component {
                 this.state.audio.pause()
                 this.setState({
                     playing: false,
-                    playingUrl: null
+                    playingUrl: ''
                 })
             } else {
                 this.state.audio.pause()
@@ -51,12 +51,15 @@ export default class Gallery extends Component {
                             <div key={index} className="track" onClick={() => this.playAudio(track.preview_url)}>
                                 <img src={trackImg} alt="track" className="track-img" />
                                 <div className="track-play">
-                                    <div className="track-play-inner">
-                                        {this.state.playingUrl == track.preview_url
-                                            ? <span>| |</span>
-                                            : <span><i class="fa fa-play"></i></span>
-                                        }
-                                    </div>
+                                    {track.preview_url == null
+                                        ? <div className="track-play-inner bg-red"><span>X</span></div>
+                                        : <div className="track-play-inner bg-default">
+                                            {this.state.playingUrl == track.preview_url
+                                                ? <span>| |</span>
+                                                : <span><i class="fa fa-play"></i></span>
+                                            }
+                                        </div>
+                                    }
                                 </div>
                                 <p className="track-text">{track.name}</p>
                             </div>

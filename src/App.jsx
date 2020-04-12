@@ -5,6 +5,7 @@ import Profile from './Profile'
 import queryString from 'query-string'
 import Gallery from './Gallery'
 
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +13,7 @@ class App extends Component {
             query: '',
             artist: null,
             tracks: [],
-            accessToken: ''
+            accessToken: '',
         }
     }
 
@@ -22,10 +23,9 @@ class App extends Component {
             accessToken: parsed.access_token
         })
         let token = this.state.accessToken
+        console.log('token', token)
         if (!token)
             return;
-        else
-            console.log('accesstoken', token)
     }
 
     search() {
@@ -39,8 +39,8 @@ class App extends Component {
         }).then(response => response.json())
             .then(json => {
                 const artist = json.artists.items[0]
-                this.setState({ artist })
-
+                this.setState({ artist, serverData: { user: { name: json.display_name } } })
+                console.log('serverData', this.state.serverData)
                 FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=US&`
                 fetch(FETCH_URL, {
                     headers: { 'Authorization': 'Bearer ' + this.state.accessToken },
@@ -57,24 +57,31 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <div className="App-title">Music Master</div>
-                <FormGroup>
-                    <InputGroup>
-                        <FormControl type="text"
-                            placeholder="Search for an artist..."
-                            value={this.state.query}
-                            onChange={event => { this.setState({ query: event.target.value }) }}
-                            onKeyPress={event => {
-                                if (event.key === 'Enter') {
-                                    this.search()
-                                }
-                            }} />
-                        <button onClick={() => this.search()}>Submit</button>
-                    </InputGroup>
+                {this.state.accessToken ?
+                    <div>
+                        <div className="App-title">Music Master</div>
+                        <FormGroup>
+                            <InputGroup>
+                                <FormControl type="text"
+                                    placeholder="Search for an artist..."
+                                    value={this.state.query}
+                                    onChange={event => { this.setState({ query: event.target.value }) }}
+                                    onKeyPress={event => {
+                                        if (event.key === 'Enter') {
+                                            this.search()
+                                        }
+                                    }} />
+                                <button onClick={() => this.search()}>Submit</button>
+                            </InputGroup>
+                        </FormGroup>
 
-                </FormGroup>
-                {this.state.artist && <Profile artist={this.state.artist} />}
-                <Gallery tracks={this.state.tracks} />
+                        {this.state.artist && <Profile artist={this.state.artist} />}
+                        <Gallery tracks={this.state.tracks} />
+                    </div>
+                    : <div>
+                        <button className="btn btn-primary" onClick={() => { window.location = window.location.href.includes('localhost') ? "http://localhost:8888/login" : "https://musicmasters-backend.herokuapp.com/login" }}>Sign in to spotify</button>
+                    </div>
+                }
             </div>
         )
     }
