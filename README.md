@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Spotify Master
-A web app built with React and Spotify Web API that allows user to search for their favoriate artists and preview the artist's top-10 albums
+A web app built with React and Spotify Web API that allows user to search for their favoriate artists and preview the artist's Top 10 albums
 
 ## Preview
 ![Screenshot of Application](public/screenshot.png)
