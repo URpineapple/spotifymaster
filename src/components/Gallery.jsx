@@ -6,12 +6,18 @@ export default class Gallery extends Component {
         this.state = {
             playingUrl: '',
             audio: null,
-            playing: false
+            playing: false,
+            albumId: null,
         }
     }
 
+    getTracks() {
+        const { albumId } = this.state
+        const BASE_URL = "https://api.spotify.com/v1"
+        const TRACKS_URL = `${BASE_URL}/albums/${albumId}/tracks`
+    }
+
     playAudio(previewUrl) {
-        console.log('previewUrl', previewUrl)
         let audio = new Audio(previewUrl)
         if (!this.state.playing) {
             audio.play()
@@ -40,7 +46,6 @@ export default class Gallery extends Component {
 
     }
     render() {
-        console.log('gallery.props', this.props)
         const { tracks } = this.props
         return (
             <div className="gallery">
@@ -56,7 +61,7 @@ export default class Gallery extends Component {
                                         : <div className="track-play-inner bg-default">
                                             {this.state.playingUrl == track.preview_url
                                                 ? <span>| |</span>
-                                                : <span><i class="fa fa-play"></i></span>
+                                                : <span><i className="fa fa-play"></i></span>
                                             }
                                         </div>
                                     }

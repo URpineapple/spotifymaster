@@ -1,0 +1,62 @@
+@media screen and (max-width: 1024px) {
+    #searchBar {
+        width: 85vw;
+    }
+    /*ArtistProfile*/
+    .profile {
+        min-height: 60vh;
+        padding: 0;
+        width: 100%;
+    }
+
+    .profile-info,
+    .profile-artist {
+        text-align: center;
+        width: inherit;
+    }
+
+    .profile-artist {
+        padding: 10px;
+    }
+
+    .profile-info {
+        padding: 0px 10px 10px 10px;
+    }
+
+    .profile-info-name {
+        font-size: 56px;
+    }
+
+    .profile-info-followers {
+        font-size: 16px;
+    }
+
+    .profile-toptracks {
+        padding: 10vh 10px 0 10px;
+    }
+
+    .profile-toptracks .row {
+        width: 100%;
+    }
+
+    /*Album*/
+    .album-cover-img {
+        width: 300px;
+        height: 300px;
+    }
+    .album-info-name {
+        text-align: center;
+    }
+    .album-info-year {
+        display: none;
+    }
+
+    .tracks-section {
+        padding: 0 10px 0 10px;
+    }
+
+    /*Navbar*/
+    .nav {
+        text-align: center;
+    }
+}
