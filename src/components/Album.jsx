@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import MyPlaylist from './MyPlaylist'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { playAudio, pauseAudio, switchAudio, pauseCurrentAudio } from '../actions'
 
-export default class Album extends Component {
+class Album extends Component {
     state = {
         tracks: [],
-        uri: null,
-        // playing: false,
-        // playingUrl: '',
-        // audio: null
+        uri: null
     }
 
     componentDidMount() {
@@ -28,20 +28,28 @@ export default class Album extends Component {
     }
 
     handlePlay(previewUrl) {
-        let audio = new Audio(previewUrl)
-        if (!this.props.playing) {
-            audio.play()
-            this.props.playSong(audio, previewUrl)
+        if (!this.props.audioState.playing) {
+            this.playSong(previewUrl)
         } else {
-            if (this.props.playingUrl == previewUrl) {
-                this.props.pauseCurrentAudio()
-                this.props.pauseSong()
+            if (this.props.audioState.playingUrl == previewUrl) {
+                this.pauseSong()
             } else {
-                this.props.pauseCurrentAudio()
-                audio.play()
-                this.props.switchSong(audio, previewUrl)
+                this.pauseSong()
+                this.switchSong(previewUrl)
             }
         }
+    }
+
+    playSong(previewUrl) {
+        this.props.playAudio(previewUrl)
+    }
+
+    pauseSong() {
+        this.props.pauseAudio()
+    }
+
+    switchSong(previewUrl) {
+        this.props.switchAudio(previewUrl)
     }
 
     showPlaylist = (uri) => {
@@ -56,8 +64,8 @@ export default class Album extends Component {
         return (
             <div className="container album">
                 <div className="row">
-                    <div className="col-md-3 col-xs-12 album-cover"><img alt="album cover" className="album-cover-img" src={album.images[1].url} /></div>
-                    <div className="col-md-9 col-xs-12 album-info">
+                    <div className="col-md-3 album-cover"><img alt="album cover" className="album-cover-img" src={album.images[1].url} /></div>
+                    <div className="col-md-9 album-info">
                         <div className="album-info-year">{album.release_date.slice(0, 4)}</div>
                         <div className="album-info-name">{album.name}</div>
                     </div>
@@ -99,3 +107,20 @@ export default class Album extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        audioState: state
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        playAudio: playAudio,
+        pauseAudio: pauseAudio,
+        switchAudio: switchAudio,
+        pauseCurrentAudio: pauseCurrentAudio
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Album);

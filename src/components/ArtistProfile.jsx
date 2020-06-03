@@ -36,7 +36,6 @@ export default class ArtistProfile extends Component {
             method: 'GET'
         })
         let artistResult = await artistResponse.json()
-        console.log('artistResult', artistResult)
         this.setState({ artist: artistResult })
     }
 

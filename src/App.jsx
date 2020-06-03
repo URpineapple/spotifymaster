@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import './styles/tablet.css'
-import { FormGroup } from 'react-bootstrap'
 import queryString from 'query-string'
 import defaultImg from './images/defaultImg.jpg'
 import ArtistProfile from './components/ArtistProfile'
@@ -40,6 +39,7 @@ class App extends Component {
                 method: 'GET'
             })
             const artistResults = await artistResponse.json()
+            
             const artists = artistResults.artists.items
             this.setState({ artists })
         }
