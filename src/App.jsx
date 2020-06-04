@@ -6,6 +6,8 @@ import defaultImg from './images/defaultImg.jpg'
 import ArtistProfile from './components/ArtistProfile'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PlaylistPage from './components/PlaylistPage'
+
 
 class App extends Component {
     constructor(props) {
@@ -39,7 +41,7 @@ class App extends Component {
                 method: 'GET'
             })
             const artistResults = await artistResponse.json()
-            
+
             const artists = artistResults.artists.items
             this.setState({ artists })
         }
@@ -52,11 +54,11 @@ class App extends Component {
                 {this.state.accessToken
                     ? <div className="App">
                         <Router>
+                            <Navbar />
                             <Switch>
                                 <Route exact path="/" render={() =>
                                     <div id="main" className="container">
                                         <div className="App-title">Music Master</div>
-
                                         <div>
                                             <input id="searchBar" type="text"
                                                 placeholder="Search for an artist..."
@@ -93,7 +95,6 @@ class App extends Component {
                                                                 <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
                                                             </div>
                                                         </div>
-
                                                     )
                                                 }
                                             </div>
@@ -103,9 +104,16 @@ class App extends Component {
                                 />
                                 <Route exact path="/artist/:artistId" render={(props) =>
                                     <div>
-                                        <Navbar />
                                         <ArtistProfile {...props} accessToken={this.state.accessToken} />
-                                    </div>} />
+                                    </div>}
+
+                                />
+                                <Route exact path="/playlist/:playlistId" render={(props) =>
+                                    <div>
+                                        <PlaylistPage {...props} accessToken={this.state.accessToken} />
+                                    </div>}
+
+                                />
                             </Switch>
 
                         </Router>

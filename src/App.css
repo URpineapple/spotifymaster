@@ -495,7 +495,7 @@ input:-webkit-autofill {
   outline: none;
   width: 200px;
   height: 45px;
-  background-color: var(--main-bg-color);
+  background-color: #54e487;
   color: #fff;
   border: none;
   border-radius: 40px;
@@ -537,6 +537,41 @@ input:-webkit-autofill {
   font-size: 20px;
   max-height: 200px;
   color: #fff;
+}
+.playlist-item-name a,
+.playlist-item-name a:hover {
+  color: #fff;
+}
+
+/*Playlist Page*/
+.playlistpage {
+  padding-top: 40px;
+}
+.playlist-initial {
+  padding-bottom: 20px;
+  border-bottom-style: solid;
+  border-color: #262626;
+  border-width: thin;
+}
+
+.playlist-initial-cover img {
+  width: 100%;
+}
+
+.playlist-initial-info {
+  padding-left: 10px;
+}
+
+.playlist-initial-info .playlist-name {
+  font-size: 50px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.playlist-initial-info .playlist-label {
+  font-size: 18px;
+  text-align: left;
+  color: var(--header-tx-color);
 }
 
 /*TopButton*/

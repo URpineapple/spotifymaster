@@ -1,4 +1,4 @@
-import { PLAY_AUDIO, PAUSE_AUDIO, SWITCH_AUDIO, PAUSE_CURRENT } from '../constant.js'
+import { PLAY_AUDIO, PAUSE_AUDIO, SWITCH_AUDIO } from '../constant.js'
 
 const initialState = {
     playing: false,
@@ -45,40 +45,36 @@ function handlePlay(previewUrl) {
 const reducers = (state = initialState, action) => {
     switch (action.type) {
         case PLAY_AUDIO:
-            let currAudio = new Audio(action.playingUrl)
+            console.log('Action PLAY_AUDIO')
+            console.log('action.playingUrl', action.payload.playingUrl)
+            let currAudio = new Audio(action.payload.playingUrl)
             currAudio.play()
             state = {
                 playing: true,
-                playingUrl: action.playingUrl,
+                playingUrl: action.payload.playingUrl,
                 audio: currAudio
             }
-            break;
+            return state;
 
         case PAUSE_AUDIO:
-            state.audio.pause()
+            if (state.audio != null) { state.audio.pause() }
             state = {
                 ...reducers,
                 playing: false
             }
-            break;
+            return state;
 
         case SWITCH_AUDIO:
-            state.audio.pause()
-            let newAudio = new Audio(action.playingUrl)
-            newAudio.play()
+            if (state.audio != null) { state.audio.pause() }
+            let newAudio = new Audio(action.payload.playingUrl)
+            // newAudio.play()
             state = {
                 playing: true,
-                playingUrl: action.playingUrl,
-                audio: currAudio
+                playingUrl: action.payload.playingUrl,
+                audio: newAudio
             }
-            break;
-
-        case PAUSE_CURRENT:
-            state = {
-                ...reducers,
-                playing: false
-            }
-            break;
+            state.audio.play()
+            return state;
 
         default:
             return state;

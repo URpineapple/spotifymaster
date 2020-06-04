@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
 import defaultImg from '../images/defaultImg.jpg'
 
 export default class MyPlaylist extends Component {
@@ -20,7 +21,7 @@ export default class MyPlaylist extends Component {
         })
         let playlistResult = await playlistResponse.json()
         this.setState({ playlists: playlistResult.items })
-        
+
     }
 
     cancelDisplay = () => {
@@ -33,14 +34,13 @@ export default class MyPlaylist extends Component {
             icon.classList.remove('fa-check');
             icon.classList.add('fa-plus');
         })
-        this.setState({addedPlaylist: []})
+        this.setState({ addedPlaylist: [] })
     }
 
     addTracks = async (e) => {
         const accessToken = this.props.accessToken
         const BASE_URL = 'https://api.spotify.com/v1/playlists/'
         let FETCH_URL = `${BASE_URL}${e}/tracks?uris=${this.props.uri}`
-        // console.log('uri', this.props.uri)
         let trackResponse = await fetch(FETCH_URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },
             method: 'POST'
@@ -56,7 +56,7 @@ export default class MyPlaylist extends Component {
         let arr = this.state.addedPlaylist
         arr.push(e)
         console.log(arr)
-        this.setState({addedPlaylist: arr})
+        this.setState({ addedPlaylist: arr })
     }
 
     render() {
@@ -80,7 +80,9 @@ export default class MyPlaylist extends Component {
                                         <i id={`${playlist.id}`} className="fa fa-plus" ></i>
                                     </div>
                                 </div>
-                                <div className="playlist-item-name">{playlist.name}</div>
+                                <div className="playlist-item-name">
+                                    <Link to={`/playlist/${playlist.id}`}>{playlist.name}</Link>
+                                </div>
                             </div>)}
                 </div>
             </div>

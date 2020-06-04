@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import MyPlaylist from './MyPlaylist'
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { playAudio, pauseAudio, switchAudio, pauseCurrentAudio } from '../actions'
+import Track from './Track'
 
 class Album extends Component {
     state = {
@@ -27,37 +25,6 @@ class Album extends Component {
         this.setState({ tracks: trackResult.items })
     }
 
-    handlePlay(previewUrl) {
-        if (!this.props.audioState.playing) {
-            this.playSong(previewUrl)
-        } else {
-            if (this.props.audioState.playingUrl == previewUrl) {
-                this.pauseSong()
-            } else {
-                this.pauseSong()
-                this.switchSong(previewUrl)
-            }
-        }
-    }
-
-    playSong(previewUrl) {
-        this.props.playAudio(previewUrl)
-    }
-
-    pauseSong() {
-        this.props.pauseAudio()
-    }
-
-    switchSong(previewUrl) {
-        this.props.switchAudio(previewUrl)
-    }
-
-    showPlaylist = (uri) => {
-        const popup = document.querySelector(".playlist")
-        popup.style.display = "block"
-        this.setState({ uri })
-    }
-
 
     render() {
         const { album } = this.props
@@ -78,28 +45,8 @@ class Album extends Component {
                     {
                         this.state.tracks &&
                         this.state.tracks.map((track, index) =>
-                            <div id={`${track.name}${index}`} className="row album-tracks">
-                                <div className="col-1">
-                                    <div className="album-tracks-index">{index + 1}</div>
-                                    <div className="album-tracks-playButton">{
-                                        track.preview_url == null
-                                            ? <div className="album-tracks-play--disable">
-                                                <i className="far fa-times-circle"></i>
-                                            </div>
-                                            : <div className="album-tracks-play">
-                                                {this.props.playingUrl == track.preview_url
-                                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(track.preview_url)}></i>
-                                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(track.preview_url)}></i>
-                                                }
-                                            </div>
-                                    }
-                                    </div>
-                                </div>
-                                <div className="col-10 album-tracks-title">{track.name}</div>
-                                <div id={this.state.uri} className="col-1 album-tracks-add" onClick={(event) => this.showPlaylist(event.target.id)}>
-                                    <i className="fa fa-plus"></i>
-                                </div>
-                            </div>)
+                            <Track key={index} index={index} name={track.name} previewUrl={track.preview_url} />
+                        )
                     }
                 </div>
                 <MyPlaylist uri={this.state.uri} accessToken={this.props.accessToken} />
@@ -108,19 +55,5 @@ class Album extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        audioState: state
-    }
-}
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        playAudio: playAudio,
-        pauseAudio: pauseAudio,
-        switchAudio: switchAudio,
-        pauseCurrentAudio: pauseCurrentAudio
-    }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Album);
+export default Album;

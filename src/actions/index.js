@@ -1,10 +1,10 @@
-import { PLAY_AUDIO, PAUSE_AUDIO, SWITCH_AUDIO, PAUSE_CURRENT } from '../constant.js'
+import { PLAY_AUDIO, PAUSE_AUDIO, SWITCH_AUDIO } from '../constant.js'
 
 export const playAudio = (previewUrl) => ({
     type: PLAY_AUDIO,
     payload: {
         type: PLAY_AUDIO,
-        previewUrl
+        playingUrl: previewUrl
     }
 });
 
@@ -15,10 +15,6 @@ export const pauseAudio = () => ({
 export const switchAudio = (previewUrl) => ({
     type: SWITCH_AUDIO,
     payload: {
-        previewUrl
+        playingUrl: previewUrl
     }
-})
-
-export const pauseCurrentAudio = () => ({
-    type: PAUSE_CURRENT
 })
