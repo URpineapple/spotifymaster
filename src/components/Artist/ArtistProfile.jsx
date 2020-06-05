@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Album from './Album'
 import defaultImg from '../images/defaultImg.jpg'
-import TopButton from './TopButton'
+import TopButton from '../TopButton'
 import Track from './Track'
 
 class ArtistProfile extends Component {
@@ -90,7 +90,7 @@ class ArtistProfile extends Component {
 
                         <div className="profile-info">
                             <div className="profile-info-name">{this.state.artist.name}</div>
-                            <div className="profile-info-followers">{this.state.artist.followers.total} followers</div>
+                            <div className="profile-info-followers">{this.state.artist.followers.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} followers</div>
                         </div>
                     </div>
                 }

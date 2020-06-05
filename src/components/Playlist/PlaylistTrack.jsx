@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { playAudio, pauseAudio, switchAudio } from '../actions'
+import { playAudio, pauseAudio, switchAudio } from '../../actions'
 
-
-class Track extends Component {
+class PlaylistTrack extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,66 +12,69 @@ class Track extends Component {
         }
     }
 
-    handlePlay(previewUrl) {
+    handlePlay(previewUrl, index) {
         if (!this.props.playing) {
-            this.playSong(previewUrl)
+            this.playSong(previewUrl, index)
         } else {
-            if (this.props.playingUrl == previewUrl) {
+            if (this.props.playingUrl == previewUrl && index == this.props.playingIndex) {
                 this.pauseSong()
             } else {
                 this.pauseSong()
-                this.switchSong(previewUrl)
+                this.switchSong(previewUrl, index)
             }
         }
     }
 
-    playSong(previewUrl) {
+    playSong(previewUrl, index) {
+        this.props.changePlayingIndex(index)
         this.props.playAudio(previewUrl)
     }
 
     pauseSong() {
+        this.props.changePlayingIndex(null)
         this.props.pauseAudio()
     }
 
-    switchSong(previewUrl) {
+    switchSong(previewUrl, index) {
+        this.props.changePlayingIndex(index)
         this.props.switchAudio(previewUrl)
+
     }
 
-    showPlaylist = (uri) => {
-        const popup = document.querySelector(".playlist")
-        popup.style.display = "block"
-        this.setState({ uri })
+    isPlaying(previewUrl, index) {
+        return this.props.playingUrl == previewUrl && previewUrl && index == this.props.playingIndex
     }
 
     render() {
+        const { track, index } = this.props
         return (
-            <div id={`${this.props.name}${this.props.index}`} className="row album-tracks">
+            <div id={`${track.name}${index}`} className="row album-tracks">
                 <div className="col-1">
-                    {this.props.playingUrl == this.props.previewUrl && this.props.previewUrl
+                    {this.isPlaying(track.preview_url, index)
                         ? <div className="album-tracks-index">
                             <i className="fa fa-volume-up"></i>
                         </div>
                         : <div className="album-tracks-index">
-                            {this.props.index + 1}
+                            {index + 1}
                         </div>
                     }
                     <div className="album-tracks-playButton">{
-                        this.props.previewUrl == null
+                        track.preview_url == null
                             ? <div className="album-tracks-play--disable">
                                 <i className="far fa-times-circle"></i>
                             </div>
                             : <div className="album-tracks-play">
-                                {this.props.playingUrl == this.props.previewUrl
-                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(this.props.previewUrl)}></i>
-                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(this.props.previewUrl)}></i>
+                                {this.isPlaying(track.preview_url, index)
+                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
+                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
                                 }
                             </div>
                     }
                     </div>
                 </div>
-                <div className="col-10 album-tracks-title">{this.props.name}</div>
-                <div id={this.props.uri} className="col-1 album-tracks-add" onClick={(event) => this.showPlaylist(event.target.id)}>
-                    <i className="fa fa-plus"></i>
+                <div className="col-10 album-tracks-title">{track.name}</div>
+                <div className="col-1 album-tracks-add">
+                    <i className="fa fa-times"></i>
                 </div>
             </div>
         )
@@ -96,4 +98,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Track)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistTrack)

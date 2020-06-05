@@ -47,6 +47,11 @@ export default class Navbar extends Component {
                     <input type="checkbox" />
                     <span className="nav-switch-slider" onClick={this.toggleThemes}></span>
                 </label>
+                <div className="nav-profile">
+                <Link to='/profile'>
+                        <div>My Playlist</div>
+                </Link>
+                </div>
             </div>
         )
     }

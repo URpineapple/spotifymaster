@@ -3,10 +3,11 @@ import './App.css'
 import './styles/tablet.css'
 import queryString from 'query-string'
 import defaultImg from './images/defaultImg.jpg'
-import ArtistProfile from './components/ArtistProfile'
+import ArtistProfile from './components/Artist/ArtistProfile'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import PlaylistPage from './components/PlaylistPage'
+import PlaylistPage from './components/Playlist/PlaylistPage'
+import MyPage from './components/MyPage'
 
 
 class App extends Component {
@@ -112,7 +113,11 @@ class App extends Component {
                                     <div>
                                         <PlaylistPage {...props} accessToken={this.state.accessToken} />
                                     </div>}
-
+                                />
+                                <Route exact path="/profile" render={() =>
+                                    <div>
+                                        <MyPage accessToken={this.state.accessToken} />
+                                    </div>}
                                 />
                             </Switch>
 

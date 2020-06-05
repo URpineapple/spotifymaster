@@ -5,11 +5,16 @@ class PlaylistPage extends Component {
     state = {
         items: [],
         name: '',
-        coverURL: null
+        coverURL: null,
+        playingIndex: null
     }
 
     componentDidMount() {
         this.getPlaylistItem()
+    }
+
+    changePlayingIndex = (index) => {
+        this.setState({playingIndex: index})
     }
 
 
@@ -22,9 +27,6 @@ class PlaylistPage extends Component {
             method: 'GET'
         })
         let playlistResult = await playlistResponse.json()
-        console.log('playlistResult', playlistResult.tracks.items)
-        console.log('name', playlistResult.name)
-        console.log('images', playlistResult.images[0].url)
 
         this.setState({
             items: playlistResult.tracks.items,
@@ -47,7 +49,7 @@ class PlaylistPage extends Component {
                 </div>
                 {this.state.items &&
                     this.state.items.map((item, index) => <div key={index}>
-                        <PlalistTrack index={index} track={item.track} />
+                        <PlalistTrack index={index} track={item.track} playingIndex={this.state.playingIndex} changePlayingIndex={this.changePlayingIndex} />
                     </div>)}
             </div>
         );
