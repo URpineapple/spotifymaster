@@ -74,7 +74,7 @@ class PlaylistTrack extends Component {
                 </div>
                 <div className="col-10 album-tracks-title">{track.name}</div>
                 <div className="col-1 album-tracks-add">
-                    <i className="fa fa-times"></i>
+                    <i className="fa fa-times" onClick={() => this.props.deleteTrack(track.uri, index)}></i>
                 </div>
             </div>
         )

@@ -283,7 +283,7 @@ input:-webkit-autofill {
   transform: translateX(40px);
 }
 
-.nav-profile{
+.nav-profile {
   position: absolute;
   right: 50px;
   background-color: var(--switch-bg-color);
@@ -296,6 +296,11 @@ input:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.nav-profile a,
+.nav-profile a:hover{
+  color: var(--nav-bg-color);
+  text-decoration: none;
 }
 
 /*Gallery*/
@@ -587,7 +592,39 @@ input:-webkit-autofill {
   color: var(--header-tx-color);
 }
 
-/*Page-me */
+/*MyPage playlist */
+.playlist--me{
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: scroll;
+}
+.playlist-item-initial--me {
+  width: 100%;
+
+  border-bottom-style: solid;
+  border-color: #262626;
+  border-width: thin;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: var(--header-tx-color);
+}
+.playlist-item-initial--me .displayIcons i{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.playlist--me {
+  padding-top: 50px;
+}
+.playlist-item--me {
+  margin-bottom: 20px;
+}
+.playlist-item-img--me {
+  width: 200px;
+  height: 200px;
+}
 
 /*TopButton*/
 .topbutton {
