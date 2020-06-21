@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { playAudio, pauseAudio, switchAudio } from '../../actions'
-
+import { playAudio, pauseAudio, switchAudio, getURI } from '../../actions'
 
 class Track extends Component {
     constructor(props) {
@@ -11,6 +10,7 @@ class Track extends Component {
             playingUrl: '',
             audio: null
         }
+        // this.showPlaylist = this.showPlaylist.bind(this)
     }
 
     handlePlay(previewUrl) {
@@ -38,10 +38,10 @@ class Track extends Component {
         this.props.switchAudio(previewUrl)
     }
 
-    showPlaylist = (uri) => {
+    showPlaylist = uri => {
         const popup = document.querySelector(".playlist")
-        popup.style.display = "block"
-        this.setState({ uri })
+        popup.style.display = "flex"
+        this.props.getURI(uri)
     }
 
     render() {
@@ -71,8 +71,8 @@ class Track extends Component {
                     </div>
                 </div>
                 <div className="col-10 album-tracks-title">{this.props.name}</div>
-                <div id={this.props.uri} className="col-1 album-tracks-add" onClick={(event) => this.showPlaylist(event.target.id)}>
-                    <i className="fa fa-plus"></i>
+                <div className="col-1 album-tracks-add">
+                    <i id={this.props.spotifyURI} className="fa fa-plus" onClick={event => this.showPlaylist(event.target.id)}></i>
                 </div>
             </div>
         )
@@ -91,7 +91,8 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         playAudio: playAudio,
         pauseAudio: pauseAudio,
-        switchAudio: switchAudio
+        switchAudio: switchAudio,
+        getURI: getURI
     }, dispatch);
 }
 

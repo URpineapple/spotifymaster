@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import defaultImg from '../components/images/defaultImg.jpg'
 import PlaylistPage from '../components/Playlist/PlaylistPage'
+import NewPlaylist from '../components/Playlist/NewPlaylist'
 
 class MyPage extends Component {
     state = {
         playlists: null,
-        isCollapsed: true
+        isCollapsed: true,
+        profile: '',
+        userID: ''
     }
 
     componentDidMount() {
         this.getMyPlaylists()
+        this.getUserData()
     }
 
     getMyPlaylists = async () => {
@@ -21,20 +25,34 @@ class MyPage extends Component {
             method: 'GET'
         })
         let playlistResult = await playlistResponse.json()
-        console.log('playlist', playlistResult.items)
         this.setState({ playlists: playlistResult.items })
+    }
 
+    getUserData = async () => {
+        const accessToken = this.props.accessToken
+        const BASE_URL = "https://api.spotify.com/v1/me"
+        let userResponse = await fetch(BASE_URL, {
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            method: 'GET'
+        })
+        let userResult = await userResponse.json()
+        this.setState({ profile: userResult.images[0].url, userID: userResult.id })
+    }
+
+    showNewPlaylist = () => {
+        let newPlaylist = document.querySelector(".newPlaylist")
+        newPlaylist.style.display = "flex"
     }
 
     render() {
         return (
             <div className="container playlist--me">
-                <button className="playlist-addnew">New playlist</button>
+                <button className="playlist-addnew--me" onClick={() => this.showNewPlaylist()}>New playlist</button>
                 <div className="row playlist-item-initial--me">
                     <div className="title">My Playlists</div>
                     <div className="displayIcons">
-                        <i className="fas fa-border-all"  onClick={() => this.setState({isCollapsed: true})}></i>
-                        <i className="fas fa-list" onClick={() => this.setState({isCollapsed: false})}></i>
+                        <i className="fas fa-border-all" onClick={() => this.setState({ isCollapsed: true })}></i>
+                        <i className="fas fa-list" onClick={() => this.setState({ isCollapsed: false })}></i>
                     </div>
                 </div>
                 {this.state.isCollapsed
@@ -66,6 +84,7 @@ class MyPage extends Component {
                         }
                     </div>
                 }
+                <NewPlaylist accessToken={this.props.accessToken} />
             </div>
         );
     }

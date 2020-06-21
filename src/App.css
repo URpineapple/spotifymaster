@@ -298,7 +298,7 @@ input:-webkit-autofill {
   align-items: center;
 }
 .nav-profile a,
-.nav-profile a:hover{
+.nav-profile a:hover {
   color: var(--nav-bg-color);
   text-decoration: none;
 }
@@ -479,6 +479,7 @@ input:-webkit-autofill {
   position: fixed;
   z-index: 10;
   background-color: black;
+  opacity: 0.9;
   width: 100%;
   height: 100vh;
   left: 0;
@@ -486,6 +487,9 @@ input:-webkit-autofill {
   bottom: 0;
   overflow-y: scroll;
   display: none;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .playlist-item {
@@ -507,12 +511,13 @@ input:-webkit-autofill {
 }
 
 .playlist-addnew {
-  margin: 2vw;
+  margin: 25px;
+  padding: 10px;
   font-size: 18px;
   letter-spacing: 1.8px;
   outline: none;
-  width: 200px;
-  height: 45px;
+  width: 300px;
+  height: 100px;
   background-color: #54e487;
   color: #fff;
   border: none;
@@ -593,12 +598,27 @@ input:-webkit-autofill {
 }
 
 /*MyPage playlist */
-.playlist--me{
+.playlist--me {
   left: 0px;
   right: 0px;
   bottom: 0px;
   overflow-y: scroll;
 }
+.playlist-addnew--me {
+  margin: 25px;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 1.8px;
+  outline: none;
+  width: 300px;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  text-transform: uppercase;
+}
+
 .playlist-item-initial--me {
   width: 100%;
 
@@ -611,7 +631,7 @@ input:-webkit-autofill {
   font-size: 20px;
   color: var(--header-tx-color);
 }
-.playlist-item-initial--me .displayIcons i{
+.playlist-item-initial--me .displayIcons i {
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -624,6 +644,65 @@ input:-webkit-autofill {
 .playlist-item-img--me {
   width: 200px;
   height: 200px;
+}
+
+/*New Playlist*/
+.newPlaylist{
+  position: fixed;
+  z-index: 10;
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.newPlaylist-input{
+  width: 100%;
+  color: #fff;
+  background-color: #282828;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.newPlaylist-input div{
+  text-align: left;
+  width: 30%;
+  min-width: 350px;
+  
+}
+
+.newPlaylist-input input{
+  outline: none;
+  border: none;
+  height: 80px;
+  font-size: 60px;
+  text-align: left;
+  width: 30%;
+  min-width: 350px;
+  color: #edfcf2;
+  background-color: #282828;
+}
+
+.newPlaylist-buttons{
+  width: 30%;
+  min-width: 350px;
+}
+
+.newPlaylist-buttons .button--cancel,
+.newPlaylist-buttons .button--create{
+  width: 200px;
+  height: 40px;
+  border-radius: 50px;
+  border:none;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 /*TopButton*/

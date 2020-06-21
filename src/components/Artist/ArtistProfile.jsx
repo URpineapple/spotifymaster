@@ -3,6 +3,8 @@ import Album from './Album'
 import defaultImg from '../images/defaultImg.jpg'
 import TopButton from '../TopButton'
 import Track from './Track'
+import MyPlaylist from '../Playlist/MyPlaylist'
+import { connect } from 'react-redux';
 
 class ArtistProfile extends Component {
     constructor(props) {
@@ -100,7 +102,7 @@ class ArtistProfile extends Component {
                             <div className="row profile-toptracks-title">Popular</div>
                             {
                                 this.state.toptracks.map((toptrack, index) =>
-                                    <Track key={index} index={index} name={toptrack.name} previewUrl={toptrack.preview_url} uri={this.state.uri} />
+                                    <Track key={index} index={index} name={toptrack.name} previewUrl={toptrack.preview_url} spotifyURI={toptrack.uri} accessToken={this.props.accessToken} />
                                 )
                             }
                         </div>
@@ -116,10 +118,18 @@ class ArtistProfile extends Component {
                         </div>
                         : <div></div>
                 }
+                <MyPlaylist uri={this.props.uri} accessToken={this.props.accessToken} />
                 <TopButton />
             </div>
         )
     }
 }
 
-export default ArtistProfile;
+const mapStateToProps = (state) => {
+    return {
+        uri: state.uri
+    }
+}
+
+
+export default connect(mapStateToProps)(ArtistProfile);

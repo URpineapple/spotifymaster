@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { playAudio, pauseAudio, switchAudio } from '../../actions'
 
+
 class PlaylistTrack extends Component {
     constructor(props) {
         super(props);
@@ -11,6 +12,7 @@ class PlaylistTrack extends Component {
             audio: null
         }
     }
+
 
     handlePlay(previewUrl, index) {
         if (!this.props.playing) {
@@ -38,7 +40,6 @@ class PlaylistTrack extends Component {
     switchSong(previewUrl, index) {
         this.props.changePlayingIndex(index)
         this.props.switchAudio(previewUrl)
-
     }
 
     isPlaying(previewUrl, index) {

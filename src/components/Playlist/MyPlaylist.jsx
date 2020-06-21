@@ -37,16 +37,15 @@ export default class MyPlaylist extends Component {
         this.setState({ addedPlaylist: [] })
     }
 
-    addTracks = async (e) => {
+    addTracks = (e) => {
         const accessToken = this.props.accessToken
         const BASE_URL = 'https://api.spotify.com/v1/playlists/'
         let FETCH_URL = `${BASE_URL}${e}/tracks?uris=${this.props.uri}`
-        let trackResponse = await fetch(FETCH_URL, {
+        fetch(FETCH_URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },
             method: 'POST'
         })
-        let trackResult = await trackResponse.json()
-        console.log('result', trackResult)
+
         const icon = document.getElementById(e)
         if (icon.classList.contains('fa-plus')) {
             icon.classList.add('fa-check');
@@ -55,7 +54,6 @@ export default class MyPlaylist extends Component {
 
         let arr = this.state.addedPlaylist
         arr.push(e)
-        console.log(arr)
         this.setState({ addedPlaylist: arr })
     }
 
@@ -65,7 +63,7 @@ export default class MyPlaylist extends Component {
                 <div className="playlist-cancel" onClick={this.cancelDisplay}>x</div>
                 <div className="playlist-title">Add to playlist</div>
                 <button className="playlist-addnew">New playlist</button>
-                <div className="row">
+                <div className="row playlist-item--wrapper">
                     {this.state.playlists
                         &&
                         this.state.playlists.map((playlist, index) =>

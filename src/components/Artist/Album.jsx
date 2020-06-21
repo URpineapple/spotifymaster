@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import MyPlaylist from '../Playlist/MyPlaylist'
 import Track from './Track'
 
 class Album extends Component {
-    state = {
-        tracks: [],
-        uri: null
+    constructor(props) {
+        super(props)
+        this.state = {
+            tracks: [],
+            uri: null
+        }
+        this.showPlaylist = this.showPlaylist.bind(this)
     }
+
 
     componentDidMount() {
         this.getTracks()
@@ -23,6 +27,12 @@ class Album extends Component {
         })
         let trackResult = await trackResponse.json()
         this.setState({ tracks: trackResult.items })
+    }
+
+    showPlaylist(uri) {
+        const popup = document.querySelector(".playlist")
+        popup.style.display = "block"
+        this.setState({ uri })
     }
 
 
@@ -45,11 +55,10 @@ class Album extends Component {
                     {
                         this.state.tracks &&
                         this.state.tracks.map((track, index) =>
-                            <Track key={index} index={index} name={track.name} previewUrl={track.preview_url} />
+                            <Track key={index} index={index} name={track.name} spotifyURI={track.uri} previewUrl={track.preview_url} accessToken={this.props.accessToken}/>
                         )
                     }
                 </div>
-                <MyPlaylist uri={this.state.uri} accessToken={this.props.accessToken} />
             </div>
         )
     }
