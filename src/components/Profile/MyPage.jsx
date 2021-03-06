@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import defaultImg from '../components/images/defaultImg.jpg'
-import PlaylistPage from '../components/Playlist/PlaylistPage'
-import NewPlaylist from '../components/Playlist/NewPlaylist'
+import defaultImg from '../../components/images/defaultImg.jpg'
+import PlaylistPage from '../Playlist/PlaylistPage'
+import NewPlaylist from '../Playlist/NewPlaylist'
 
 class MyPage extends Component {
     state = {
         playlists: null,
         isCollapsed: true,
-        profile: '',
+        profileUrl: '',
         userID: ''
     }
 
     componentDidMount() {
-        this.getMyPlaylists()
         this.getUserData()
+        this.getMyPlaylists()
     }
 
     getMyPlaylists = async () => {
-        const accessToken = this.props.accessToken
+        const accessToken = this.props.accessToken;
         const BASE_URL = 'https://api.spotify.com/v1/me/playlists'
         let playlistResponse = await fetch(BASE_URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },
@@ -36,7 +36,7 @@ class MyPage extends Component {
             method: 'GET'
         })
         let userResult = await userResponse.json()
-        this.setState({ profile: userResult.images[0].url, userID: userResult.id })
+        this.setState({ profileUrl: userResult.images[0].url, userID: userResult.id })
     }
 
     showNewPlaylist = () => {
@@ -45,11 +45,13 @@ class MyPage extends Component {
     }
 
     render() {
+        const { profileUrl } = this.state
         return (
             <div className="container playlist--me">
+                <div><img src={profileUrl ? profileUrl : defaultImg} alt="user profile" className="playlist-profile" /></div>
                 <button className="playlist-addnew--me" onClick={() => this.showNewPlaylist()}>New playlist</button>
                 <div className="row playlist-item-initial--me">
-                    <div className="title">My Playlists</div>
+                    <div className="title">Your Playlists</div>
                     <div className="displayIcons">
                         <i className="fas fa-border-all" onClick={() => this.setState({ isCollapsed: true })}></i>
                         <i className="fas fa-list" onClick={() => this.setState({ isCollapsed: false })}></i>
