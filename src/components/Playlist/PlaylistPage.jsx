@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PlalistTrack from './PlaylistTrack'
 import defaultImg from '../images/defaultImg.jpg'
-
+import { Link } from "react-router-dom";
 class PlaylistPage extends Component {
     state = {
         items: [],
@@ -90,7 +90,6 @@ class PlaylistPage extends Component {
                     </div>
                     <div className="col-12 col-md-9 playlist-initial-info">
                         <div className="playlist-label">Playlist</div>
-
                         <div className="playlist-name">
                             {this.state.isEditing
                                 ? <input
@@ -102,6 +101,7 @@ class PlaylistPage extends Component {
                                 : <div onClick={() => this.setState({ isEditing: true, newName: this.state.name })}>{this.state.name}</div>
                             }
                         </div>
+                        <div><Link to="/editing"><button>Add new songs</button></Link></div>
                     </div>
                 </div>
                 {this.state.items.length > 0

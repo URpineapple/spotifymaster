@@ -1,0 +1,20 @@
+.editing {
+	padding-top: 100px;
+}
+
+.left {
+	height: 100%;
+	width: 50vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #fff;
+    color:#111;
+	overflow-x: hidden;
+	padding-top: 60px;
+	/* transition: 0.5s; */
+}
+
+.right{
+    margin-left: 50vw;
+}

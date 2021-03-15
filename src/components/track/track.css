@@ -1,0 +1,68 @@
+.album-tracks,
+.album-tracks0 {
+	text-align: left;
+	border-bottom-style: solid;
+	border-color: #262626;
+	border-width: thin;
+	height: 35px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.album-tracks:hover {
+	background-color: var(--lighter-bg-color);
+}
+.album-tracks:hover .album-tracks-playButton {
+	display: inline-block;
+}
+.album-tracks:hover .album-tracks-index {
+	display: none;
+}
+
+.album-tracks:hover .album-tracks-add {
+	visibility: visible;
+}
+
+.album-tracks-title {
+	max-width: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	/* color: var(--main-tx-color); */
+    color: black;
+}
+.album-tracks-title0,
+.album-tracks-index0 {
+	/* color: var(--header-tx-color); */
+    color: black;
+}
+
+.album-tracks-index {
+	/* color: var(--header-tx-color); */
+    color: black;
+	display: inline-block;
+}
+
+.album-tracks-playButton {
+	display: none;
+}
+
+.album-tracks-play,
+.album-tracks-play--disable {
+	font-size: 20px;
+}
+
+.album-tracks-play i {
+	cursor: pointer;
+}
+
+.album-tracks-play--disable {
+	color: var(--tx-color-disable);
+}
+
+.album-tracks-add {
+	cursor: pointer;
+	visibility: hidden;
+}

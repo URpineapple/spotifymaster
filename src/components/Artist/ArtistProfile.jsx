@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Album from './Album'
 import defaultImg from '../images/defaultImg.jpg'
 import TopButton from '../TopButton'
-import Track from './Track'
+import Track from '../track'
 import MyPlaylist from '../Playlist/MyPlaylist'
 import { connect } from 'react-redux';
 

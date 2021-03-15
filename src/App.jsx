@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 import './App.css'
 import './styles/tablet.css'
 import queryString from 'query-string'
-import defaultImg from './images/defaultImg.jpg'
 import ArtistProfile from './components/Artist/ArtistProfile'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PlaylistPage from './components/Playlist/PlaylistPage'
 import MyPage from './components/Profile/MyPage'
+import EditingPlaylist from './components/Editing';
 
-const routes = [
-    {
-
-    },
-]
 
 class App extends Component {
     constructor(props) {
@@ -27,7 +22,6 @@ class App extends Component {
 
     componentDidMount() {
         const parsed = queryString.parse(window.location.search);
-        console.log('parsed', parsed)
         this.setState({
             accessToken: parsed.access_token
         })
@@ -57,52 +51,6 @@ class App extends Component {
 
 
     render() {
-
-        const SearchBarComponent = () => {
-            return (
-                <div id="main" className="container">
-                    <div className="App-title">Music Master</div>
-                    <div>
-                        <input id="searchBar" type="text"
-                            placeholder="Search for an artist..."
-                            value={this.state.query}
-                            onChange={event => this.searchArtist(event.target.value)}
-                            onKeyPress={event => {
-                                if (event.key === 'Enter') {
-                                    this.searchArtist()
-                                }
-                            }} />
-                    </div>
-                    {this.state.artists && <div className="row">
-                        {
-                            this.state.artists.map((artist, index) =>
-                                <div className="col-6 col-md-3 profile-wrapper" key={index}>
-                                    <div>
-                                        <Link to={`/artist/${artist.id}`}>
-                                            {
-                                                artist.images[0]
-                                                    ? <img
-                                                        alt="Artist Profile"
-                                                        className="profile-img"
-                                                        src={artist.images[0].url} />
-                                                    : <img
-                                                        alt="Aritst with no profile"
-                                                        className="profile-img"
-                                                        src={defaultImg} />
-                                            }
-                                        </Link>
-                                    </div>
-                                    <div className="profile-name">
-                                        <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    </div>
-                    }
-                </div>
-            )
-        }
         return (
             <div>
                 {this.state.accessToken
@@ -117,6 +65,7 @@ class App extends Component {
                                 <Route exact path="/playlist/:playlistId" render={(props) =>
                                     <PlaylistPage {...props} accessToken={this.state.accessToken} />}
                                 />
+                                <Route exact path="/editing" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
                                 <Route exact path="/" render={() => <MyPage accessToken={this.state.accessToken} />}
                                 />
                             </Switch>
