@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PlalistTrack from './PlaylistTrack'
 import defaultImg from '../images/defaultImg.jpg'
 import { Link } from "react-router-dom";
+
 class PlaylistPage extends Component {
     state = {
         items: [],
@@ -19,8 +20,6 @@ class PlaylistPage extends Component {
     changePlayingIndex = (index) => {
         this.setState({ playingIndex: index })
     }
-
-
 
     getPlaylistItem = async () => {
         const accessToken = this.props.accessToken
@@ -63,7 +62,6 @@ class PlaylistPage extends Component {
             method: 'PUT'
         })
 
-
         this.setState({ isEditing: false, name: this.state.newName }, () => this.getPlaylistItem())
     }
 
@@ -78,9 +76,33 @@ class PlaylistPage extends Component {
         this.setState({ newName: event.target.value })
     }
 
+    addTrack = async (trackUri) => {
+        // const param = { "name": this.state.newName }
+        const accessToken = this.props.accessToken
+        const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
+        const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`
+        fetch(URL, {
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            method: 'POST',
+            // mode: 'no-cors'
+        })
+        this.getPlaylistItem()
+    }
+
+    allowDrop = (e) => {
+        e.preventDefault();
+    }
+
+    dropTrack = (e) => {
+        e.preventDefault();
+		let trackUri = e.dataTransfer.getData('text');
+        this.addTrack(trackUri)
+    }
+
     render() {
+        const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         return (
-            <div className="container playlistpage">
+            <div className="container playlistpage" onDrop={e => this.dropTrack(e)} onDragOver={e => this.allowDrop(e)}>
                 <div className="row playlist-initial">
                     <div className="col-12 col-md-3 playlist-initial-cover">
                         {this.state.coverURL
@@ -101,7 +123,7 @@ class PlaylistPage extends Component {
                                 : <div onClick={() => this.setState({ isEditing: true, newName: this.state.name })}>{this.state.name}</div>
                             }
                         </div>
-                        <div><Link to="/editing"><button>Add new songs</button></Link></div>
+                        <div><Link to={`/editing/${playlistId}`}><button>Add new songs</button></Link></div>
                     </div>
                 </div>
                 {this.state.items.length > 0

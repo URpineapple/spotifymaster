@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './editing.css';
 import Searchbar from './Searchbar';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PlaylistPage from '../Playlist/PlaylistPage';
 
 class EditingPlaylist extends Component {
     render() {
@@ -12,8 +13,8 @@ class EditingPlaylist extends Component {
                         <Searchbar accessToken={this.props.accessToken} />
                     </div>
                     <div className="right">
-                        playlist
-               </div>
+                        <PlaylistPage accessToken={this.props.accessToken} match={this.props.match} />
+                    </div>
                 </Router>
             </div>
         );

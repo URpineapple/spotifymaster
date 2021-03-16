@@ -33,7 +33,7 @@ class NewPlaylist extends Component {
         })
         let userResult = await userResponse.json()
         this.setState({ newPlaylistID: userResult.id })
-        console.log('userResult', userResult)
+        // console.log('userResult', userResult)
     }
 
     handleChange = event => {

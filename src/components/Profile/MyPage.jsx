@@ -49,7 +49,7 @@ class MyPage extends Component {
         return (
             <div className="container playlist--me">
                 <div><img src={profileUrl ? profileUrl : defaultImg} alt="user profile" className="playlist-profile" /></div>
-                <Link to="/editing"><button>Go to editing page</button></Link>
+                <Link to="/editing/62vJABy0gDi6lVlL4gUcR3"><button>Go to editing page</button></Link>
                 <button className="playlist-addnew--me" onClick={() => this.showNewPlaylist()}>New playlist</button>
                 <div className="row playlist-item-initial--me">
                     <div className="title">Your Playlists</div>

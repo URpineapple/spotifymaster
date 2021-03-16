@@ -40,7 +40,7 @@ const AlbumDisplay = ({ album }) => {
 const TrackDisplay = ({ track, accessToken}) => {
     return (
         <div className="col-12" >
-           <Track index={0} track={track}  accessToken={accessToken}/>
+           <Track index={0} track={track}  accessToken={accessToken} draggable="true" />
         </div>
     )
 }

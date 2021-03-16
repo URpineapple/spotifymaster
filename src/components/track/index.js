@@ -45,11 +45,18 @@ class Track extends Component {
         this.props.getURI(uri)
     }
 
+    dragTrack = (e) => {
+        e.dataTransfer.setData('text', this.props.track.uri);
+    }
+
     render() {
-        console.log('track', this.props.track)
+        // console.log('track', this.props.track)
         const {name, previewUrl, spotifyURI} = this.props.track
         return (
-            <div id={`${name}`} className="row album-tracks">
+            <div id={`${name}`} 
+            className="row album-tracks" 
+            draggable={this.props.draggable} 
+            onDragStart={e => this.dragTrack(e)}>
                 <div className="col-1">
                     {this.props.playingUrl == previewUrl && previewUrl
                         ? <div className="album-tracks-index">

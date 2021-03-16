@@ -65,7 +65,7 @@ class App extends Component {
                                 <Route exact path="/playlist/:playlistId" render={(props) =>
                                     <PlaylistPage {...props} accessToken={this.state.accessToken} />}
                                 />
-                                <Route exact path="/editing" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
+                                <Route exact path="/editing/:playlistId" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
                                 <Route exact path="/" render={() => <MyPage accessToken={this.state.accessToken} />}
                                 />
                             </Switch>

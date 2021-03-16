@@ -5,12 +5,9 @@ import { playAudio, pauseAudio, switchAudio } from '../../actions'
 
 
 class PlaylistTrack extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            playingUrl: '',
-            audio: null
-        }
+    state = {
+        playingUrl: '',
+        audio: null
     }
 
 
