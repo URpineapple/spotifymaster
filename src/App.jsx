@@ -59,14 +59,15 @@ class App extends Component {
                             <Navbar />
                             <Switch>
                                 {/* <Route exact path="/" render={() => <SearchBarComponent />} /> */}
-                                <Route exact path="/artist/:artistId" render={(props) =>
+                                {/* <Route exact path="/artist/:artistId" render={(props) =>
                                     <ArtistProfile {...props} accessToken={this.state.accessToken} />}
                                 />
-                                <Route exact path="/playlist/:playlistId" render={(props) =>
+                                 */}
+                                <Route path="/playlist/:playlistId" render={(props) =>
                                     <PlaylistPage {...props} accessToken={this.state.accessToken} />}
                                 />
-                                <Route exact path="/editing/:playlistId" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
-                                <Route exact path="/" render={() => <MyPage accessToken={this.state.accessToken} />}
+                                <Route path="/editing/:playlistId" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
+                                <Route path="/" render={() => <MyPage accessToken={this.state.accessToken} />}
                                 />
                             </Switch>
                         </Router>

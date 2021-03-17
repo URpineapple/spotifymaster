@@ -19,7 +19,7 @@ class Album extends Component {
     getTracks = async () => {
         const accessToken = this.props.accessToken
 
-        const albumId = this.props.albumId;
+        const albumId = this.props.albumId ? this.props.albumId : this.props.match.params.albumId;
         const BASE_URL = `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=50`
         let trackResponse = await fetch(BASE_URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },

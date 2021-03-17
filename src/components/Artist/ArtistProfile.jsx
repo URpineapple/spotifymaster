@@ -118,7 +118,7 @@ class ArtistProfile extends Component {
                         </div>
                         : <div></div>
                 }
-                <MyPlaylist uri={this.props.uri} accessToken={this.props.accessToken} />
+                {/* <MyPlaylist uri={this.props.uri} accessToken={this.props.accessToken} /> */}
                 <TopButton />
             </div>
         )

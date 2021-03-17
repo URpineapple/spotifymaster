@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import defaultImg from '../images/defaultImg.jpg';
 import React, { Component } from 'react';
 import Track from '../track';
+import { withRouter } from "react-router";
 
-const ArtistDisplay = ({ artist }) => {
+const ArtistDisplay = ({ artist, url }) => {
     return (
         <div className="col-6 col-md-4" >
             <div>
-                <Link to={`/artist/${artist.id}`}>
+                <Link to={`${url}/artist/${artist.id}`}>
                     {
                         artist.images[0]
                             ? <img
@@ -22,25 +23,26 @@ const ArtistDisplay = ({ artist }) => {
                 </Link>
             </div>
             <div className="profile-name">
-                <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
+                <Link to={`${url}/artist/${artist.id}`}>{artist.name}</Link>
             </div>
         </div>)
 }
 
-const AlbumDisplay = ({ album }) => {
+const AlbumDisplay = ({ album, url }) => {
     return (
         <div className="col-6 col-md-4" >
-            <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
-            <p>{album.name}</p>
-
+            <Link to={`${url}/album/${album.id}`}>
+                <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
+                <p>{album.name}</p>
+            </Link>
         </div>
     )
 }
 
-const TrackDisplay = ({ track, accessToken}) => {
+const TrackDisplay = ({ track, accessToken }) => {
     return (
         <div className="col-12" >
-           <Track index={0} track={track}  accessToken={accessToken} draggable="true" />
+            <Track index={0} track={track} accessToken={accessToken} draggable="true" />
         </div>
     )
 }
@@ -76,6 +78,7 @@ class Searchbar extends Component {
     }
 
     render() {
+        const { url } = this.props.match;
         return (
             <div id="main" className="container">
                 <div className="App-title">PlaylistPro</div>
@@ -100,7 +103,7 @@ class Searchbar extends Component {
                 <div className="row">
                     {
                         this.state.artists.map((artist, index) =>
-                            <ArtistDisplay key={index} artist={artist} />
+                            <ArtistDisplay key={index} artist={artist} url={url} />
                         )
 
                     }
@@ -108,7 +111,7 @@ class Searchbar extends Component {
                 <div className="row">
                     {
                         this.state.albums.map((album, index) =>
-                            <AlbumDisplay key={index} album={album} />
+                            <AlbumDisplay key={index} album={album} url={url} />
                         )
                     }
                 </div>
@@ -118,4 +121,4 @@ class Searchbar extends Component {
     }
 }
 
-export default Searchbar;
+export default withRouter(Searchbar);
