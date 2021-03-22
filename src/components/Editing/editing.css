@@ -1,5 +1,5 @@
 .editing {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .left {
@@ -9,12 +9,28 @@
 	top: 0;
 	left: 0;
 	background-color: #fff;
-    color:#111;
+	color: #111;
 	overflow-x: hidden;
 	padding-top: 60px;
 	/* transition: 0.5s; */
 }
 
-.right{
-    margin-left: 50vw;
+.right {
+	margin-left: 50vw;
+}
+.result-divider {
+	color: #111;
+	font-weight: bold;
+	margin-top: 25px;
+	margin-bottom: 10px;
+	text-align: left;
+	font-size: 20px;
+}
+.editing-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-gap: 15px;
+}
+.editing-album img {
+	max-width: 100%;
 }

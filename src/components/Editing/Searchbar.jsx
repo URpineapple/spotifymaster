@@ -30,7 +30,7 @@ const ArtistDisplay = ({ artist, url }) => {
 
 const AlbumDisplay = ({ album, url }) => {
     return (
-        <div className="col-6 col-md-4" >
+        <div className="editing-album" >
             <Link to={`${url}/album/${album.id}`}>
                 <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
                 <p>{album.name}</p>
@@ -79,12 +79,12 @@ class Searchbar extends Component {
 
     render() {
         const { url } = this.props.match;
+        const { tracks, artists, albums } = this.state
         return (
             <div id="main" className="container">
-                <div className="App-title">PlaylistPro</div>
                 <div>
                     <input id="searchBar" type="text"
-                        placeholder="Search for an artist..."
+                        placeholder="Search for Songs, Artists or Albums..."
                         value={this.state.query}
                         onChange={this.searchArtist}
                         onKeyPress={event => {
@@ -93,24 +93,27 @@ class Searchbar extends Component {
                             }
                         }} />
                 </div>
+                {tracks.length > 0 && <div className="result-divider">Songs</div>}
                 <div className="row">
                     {
-                        this.state.tracks.map((track, index) =>
+                        tracks.map((track, index) =>
                             <TrackDisplay key={index} track={track} accessToken={this.props.accessToken} />
                         )
                     }
                 </div>
+                {artists.length > 0 && <div className="result-divider">Artists</div>}
                 <div className="row">
                     {
-                        this.state.artists.map((artist, index) =>
+                        artists.map((artist, index) =>
                             <ArtistDisplay key={index} artist={artist} url={url} />
                         )
 
                     }
                 </div>
-                <div className="row">
+                {albums.length > 0 && <div className="result-divider">Albums</div>}
+                <div className="editing-row">
                     {
-                        this.state.albums.map((album, index) =>
+                        albums.map((album, index) =>
                             <AlbumDisplay key={index} album={album} url={url} />
                         )
                     }

@@ -9,22 +9,23 @@ import ArtistProfile from '../Artist/ArtistProfile';
 
 class EditingPlaylist extends Component {
     render() {
-        const { pathname } = this.props.location;
+        const pathname = this.props.match.url
         return (
             <div className="editing">
                 <div className="left">
                     <Switch>
+                        <Route exact path={pathname} render={() =>
+                            <Searchbar accessToken={this.props.accessToken} />} />
+                        <Route path={`${pathname}/test`} component={<p>Test</p>} />
                         <Route path={`${pathname}/album/:albumId`} render={
-                            (props) => <AlbumPage {...props} accessToken={this.state.accessToken} />} />
+                            (props) => <AlbumPage {...props} accessToken={this.props.accessToken} />} />
                         <Route path={`${pathname}/artist/:artistId`} render={
-                            (props) => <ArtistProfile {...props} accessToken={this.state.accessToken} />} />
-                        <Route exact path={pathname}>
-                            <Searchbar accessToken={this.props.accessToken} />
-                        </Route>
+                            (props) => <ArtistProfile {...props} accessToken={this.props.accessToken} />} />
+
                     </Switch>
                 </div>
                 <div className="right">
-                    <PlaylistPage accessToken={this.props.accessToken} match={this.props.match} />
+                    <PlaylistPage accessToken={this.props.accessToken} match={this.props.match} showEditing={false} />
                 </div>
             </div>
         );

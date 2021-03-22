@@ -48,8 +48,8 @@ export default class Navbar extends Component {
                     <span className="nav-switch-slider" onClick={this.toggleThemes}></span>
                 </label>
                 <div className="nav-profile">
-                <Link to='/profile'>
-                        <div>My Playlist</div>
+                <Link to='/'>
+                        <div>Your Profile</div>
                 </Link>
                 </div>
             </div>

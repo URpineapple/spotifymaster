@@ -6,7 +6,7 @@ import NewPlaylist from '../Playlist/NewPlaylist'
 
 class MyPage extends Component {
     state = {
-        playlists: null,
+        playlists: [],
         isCollapsed: true,
         profileUrl: '',
         userID: ''
@@ -49,7 +49,6 @@ class MyPage extends Component {
         return (
             <div className="container playlist--me">
                 <div><img src={profileUrl ? profileUrl : defaultImg} alt="user profile" className="playlist-profile" /></div>
-                <Link to="/editing/62vJABy0gDi6lVlL4gUcR3"><button>Go to editing page</button></Link>
                 <button className="playlist-addnew--me" onClick={() => this.showNewPlaylist()}>New playlist</button>
                 <div className="row playlist-item-initial--me">
                     <div className="title">Your Playlists</div>
@@ -81,9 +80,13 @@ class MyPage extends Component {
                     </div>
                     :
                     <div className="row">
-                        {this.state.playlists
-                            &&
-                            this.state.playlists.map((item, index) => <PlaylistPage key={index} playlistId={item.id} accessToken={this.props.accessToken} />)
+                        {
+                            this.state.playlists.map((item, index) =>
+                                <PlaylistPage key={index}
+                                    playlistId={item.id}
+                                    accessToken={this.props.accessToken}
+                                    showEditing={true}
+                                />)
                         }
                     </div>
                 }

@@ -4,7 +4,7 @@
 	border-bottom-style: solid;
 	border-color: #262626;
 	border-width: thin;
-	height: 35px;
+	min-height: 35px;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -37,6 +37,9 @@
 .album-tracks-index0 {
 	/* color: var(--header-tx-color); */
     color: black;
+}
+.tracks-artist{
+	font-size: 14px;
 }
 
 .album-tracks-index {

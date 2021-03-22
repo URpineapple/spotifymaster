@@ -49,14 +49,21 @@ class Track extends Component {
         e.dataTransfer.setData('text', this.props.track.uri);
     }
 
+    durationCovert = (time) => {
+        let min = Math.round((time / 1000) / 60)
+        let sec = Math.round((time / 1000) % 60)
+        sec = sec < 9 ? 0 + sec.toString() : sec
+        return min + ':' + sec
+    }
+
     render() {
-        // console.log('track', this.props.track)
-        const {name, previewUrl, spotifyURI} = this.props.track
+        console.log('track', this.props.track)
+        const { name, previewUrl, spotifyURI, duration_ms, artists } = this.props.track ? this.props.track : this.props
         return (
-            <div id={`${name}`} 
-            className="row album-tracks" 
-            draggable={this.props.draggable} 
-            onDragStart={e => this.dragTrack(e)}>
+            <div id={`${name}`}
+                className="row album-tracks"
+                draggable={this.props.draggable}
+                onDragStart={e => this.dragTrack(e)}>
                 <div className="col-1">
                     {this.props.playingUrl == previewUrl && previewUrl
                         ? <div className="album-tracks-index">
@@ -80,9 +87,23 @@ class Track extends Component {
                     }
                     </div>
                 </div>
-                <div className="col-10 album-tracks-title">{name}</div>
+                <div className="col-9 album-tracks-title">
+                    <div>{name}</div>
+                    <div className="tracks-artist">
+                        {artists.map((artist, index) =>
+                            <span key={index}>
+                                {artist.name}
+                                {index != artists.length - 1 && ', '}
+                            </span>
+                        )}
+                    </div>
+                </div>
+                <div className="col-1">
+                    {this.durationCovert(duration_ms)}
+                </div>
                 <div className="col-1 album-tracks-add">
                     <i id={spotifyURI} className="fa fa-plus" onClick={event => this.showPlaylist(event.target.id)}></i>
+
                 </div>
             </div>
         )

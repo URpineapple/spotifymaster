@@ -33,10 +33,6 @@ a.active {
 	min-height: 100vh;
 }
 
-#main {
-	padding-top: 10vh;
-}
-
 #searchBar {
 	width: 80%;
 	border-radius: 50px;
@@ -510,7 +506,9 @@ input:-webkit-autofill {
 
 /*Playlist Page*/
 .playlistpage {
-	padding-top: 40px;
+	padding-top: 50px;
+	padding-bottom: 30px;
+	min-height: 85vh;
 }
 .playlist-initial {
 	padding-bottom: 20px;
@@ -537,6 +535,19 @@ input:-webkit-autofill {
 	font-size: 18px;
 	text-align: left;
 	color: var(--header-tx-color);
+}
+.add-section{
+	text-align: left;
+}
+.add-btn{
+	color: white;
+	border: none;
+	outline: none;
+	border-radius: 100px;
+	width: 200px;
+	height: 40px;
+	background-color: #000;
+	text-transform: capitalize;
 }
 
 /*MyPage playlist */
@@ -568,7 +579,7 @@ input:-webkit-autofill {
 	border-width: thin;
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	padding: 5px;
 	font-size: 20px;
 	color: var(--header-tx-color);

@@ -95,11 +95,12 @@ class PlaylistPage extends Component {
 
     dropTrack = (e) => {
         e.preventDefault();
-		let trackUri = e.dataTransfer.getData('text');
+        let trackUri = e.dataTransfer.getData('text');
         this.addTrack(trackUri)
     }
 
     render() {
+        const { showEditing } = this.props
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         return (
             <div className="container playlistpage" onDrop={e => this.dropTrack(e)} onDragOver={e => this.allowDrop(e)}>
@@ -123,7 +124,13 @@ class PlaylistPage extends Component {
                                 : <div onClick={() => this.setState({ isEditing: true, newName: this.state.name })}>{this.state.name}</div>
                             }
                         </div>
-                        <div><Link to={`/editing/${playlistId}`}><button>Add new songs</button></Link></div>
+                        {showEditing &&
+                            <div className="add-section">
+                                <Link to={`/editing/${playlistId}`}>
+                                    <button className="add-btn">Add new songs</button>
+                                </Link>
+                            </div>
+                        }
                     </div>
                 </div>
                 {this.state.items.length > 0

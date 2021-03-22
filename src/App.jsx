@@ -9,7 +9,6 @@ import PlaylistPage from './components/Playlist/PlaylistPage'
 import MyPage from './components/Profile/MyPage'
 import EditingPlaylist from './components/Editing';
 
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -47,13 +46,11 @@ class App extends Component {
         }
     }
 
-
-
-
     render() {
+        const { accessToken } = this.state
         return (
             <div>
-                {this.state.accessToken
+                {accessToken
                     ? <div className="App">
                         <Router>
                             <Navbar />
@@ -63,18 +60,20 @@ class App extends Component {
                                     <ArtistProfile {...props} accessToken={this.state.accessToken} />}
                                 />
                                  */}
+                                <Route exact path="/" render={() => <MyPage accessToken={accessToken} />}
+                                />
                                 <Route path="/playlist/:playlistId" render={(props) =>
-                                    <PlaylistPage {...props} accessToken={this.state.accessToken} />}
+                                    <PlaylistPage {...props} accessToken={accessToken} showEditing={true} />}
                                 />
-                                <Route path="/editing/:playlistId" render={(props) => <EditingPlaylist {...props} accessToken={this.state.accessToken}/>} />
-                                <Route path="/" render={() => <MyPage accessToken={this.state.accessToken} />}
-                                />
+                                <Route path="/editing/:playlistId" render={(props) =>
+                                    <EditingPlaylist {...props} accessToken={accessToken} />} />
+
                             </Switch>
                         </Router>
                     </div>
                     : <div className="login">
                         <div className="login-btn">
-                            <div className="login-btn-text">Music Master</div>
+                            <div className="login-btn-text">PlaylistPro</div>
                             <button
                                 onClick={() => { window.location = window.location.href.includes('localhost') ? "http://localhost:8888/login" : "https://musicmasters-backend.herokuapp.com/login" }}>
                                 Sign In
