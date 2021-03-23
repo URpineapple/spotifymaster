@@ -102,7 +102,7 @@ class ArtistProfile extends Component {
                             <div className="row profile-toptracks-title">Popular</div>
                             {
                                 this.state.toptracks.map((toptrack, index) =>
-                                    <Track key={index} index={index} name={toptrack.name} previewUrl={toptrack.preview_url} spotifyURI={toptrack.uri} accessToken={this.props.accessToken} />
+                                    <Track key={index} index={index} track={toptrack} accessToken={this.props.accessToken} />
                                 )
                             }
                         </div>
@@ -118,7 +118,6 @@ class ArtistProfile extends Component {
                         </div>
                         : <div></div>
                 }
-                {/* <MyPlaylist uri={this.props.uri} accessToken={this.props.accessToken} /> */}
                 <TopButton />
             </div>
         )

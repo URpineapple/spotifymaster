@@ -57,8 +57,7 @@ class Track extends Component {
     }
 
     render() {
-        console.log('track', this.props.track)
-        const { name, previewUrl, spotifyURI, duration_ms, artists } = this.props.track ? this.props.track : this.props
+        const { name, previewUrl, spotifyURI, duration_ms, artists } = this.props.track
         return (
             <div id={`${name}`}
                 className="row album-tracks"

@@ -3,11 +3,10 @@ import Track from '../track'
 
 class Album extends Component {
     state = {
-            tracks: [],
-            uri: null
+        tracks: [],
+        uri: null
     }
-    // this.showPlaylist = this.showPlaylist.bind(this)
-    
+
     componentDidMount() {
         this.getTracks()
     }
@@ -30,13 +29,14 @@ class Album extends Component {
         this.setState({ uri })
     }
 
-
     render() {
-        const { album } = this.state;
+        const { album, tracks } = this.state;
         return (
             <div className="container album">
                 <div className="row">
-                    <div className="col-md-3 album-cover"><img alt="album cover" className="album-cover-img" src={album?.images[1]?.url} /></div>
+                    <div className="col-md-3 album-cover">
+                        <img alt="album cover" className="album-cover-img" src={album?.images[1]?.url} />
+                    </div>
                     <div className="col-md-9 album-info">
                         <div className="album-info-year">{album?.release_date.slice(0, 4)}</div>
                         <div className="album-info-name">{album?.name}</div>
@@ -48,9 +48,8 @@ class Album extends Component {
                         <div className="col-11 album-tracks-title0">TITLE</div>
                     </div>
                     {
-                        this.state.tracks &&
-                        this.state.tracks.map((track, index) =>
-                            <Track key={index} index={index} name={track.name} spotifyURI={track.uri} previewUrl={track.preview_url} accessToken={this.props.accessToken}/>
+                        tracks.map((track, index) =>
+                            <Track key={index} index={index} track={track} accessToken={this.props.accessToken} />
                         )
                     }
                 </div>

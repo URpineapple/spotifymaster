@@ -77,11 +77,10 @@ class PlaylistPage extends Component {
     }
 
     addTrack = async (trackUri) => {
-        // const param = { "name": this.state.newName }
         const accessToken = this.props.accessToken
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`
-        fetch(URL, {
+        let response = await fetch(URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },
             method: 'POST',
             // mode: 'no-cors'
@@ -101,9 +100,10 @@ class PlaylistPage extends Component {
 
     render() {
         const { showEditing } = this.props
+        const { items } = this.state
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         return (
-            <div className="container playlistpage" onDrop={e => this.dropTrack(e)} onDragOver={e => this.allowDrop(e)}>
+            <div className="container playlistpage" onDrop={e => this.dropTrack(e)} onDragOver={(e) => this.allowDrop(e)}>
                 <div className="row playlist-initial">
                     <div className="col-12 col-md-3 playlist-initial-cover">
                         {this.state.coverURL
@@ -133,10 +133,11 @@ class PlaylistPage extends Component {
                         }
                     </div>
                 </div>
-                {this.state.items.length > 0
-                    ? this.state.items.map((item, index) => <div key={index}>
-                        <PlalistTrack index={index} track={item.track} playingIndex={this.state.playingIndex} changePlayingIndex={this.changePlayingIndex} deleteTrack={this.deleteTrack} />
-                    </div>)
+                {items.length > 0
+                    ? items.map((item, index) =>
+                        <div key={index}>
+                            <PlalistTrack index={index} track={item.track} playingIndex={this.state.playingIndex} changePlayingIndex={this.changePlayingIndex} deleteTrack={this.deleteTrack} />
+                        </div>)
                     : <div className="playlist-empty">
                         <div>It's a bit empty here. </div>
                         <div>Let's find some songs for your playlist.</div>

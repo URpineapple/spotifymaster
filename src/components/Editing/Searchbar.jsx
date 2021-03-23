@@ -4,40 +4,49 @@ import React, { Component } from 'react';
 import Track from '../track';
 import { withRouter } from "react-router";
 
-const ArtistDisplay = ({ artist, url }) => {
-    return (
-        <div className="col-6 col-md-4" >
-            <div>
-                <Link to={`${url}/artist/${artist.id}`}>
-                    {
-                        artist.images[0]
-                            ? <img
-                                alt="Artist Profile"
-                                className="profile-img"
-                                src={artist.images[0].url} />
-                            : <img
-                                alt="Aritst with no profile"
-                                className="profile-img"
-                                src={defaultImg} />
-                    }
-                </Link>
-            </div>
-            <div className="profile-name">
-                <Link to={`${url}/artist/${artist.id}`}>{artist.name}</Link>
-            </div>
-        </div>)
-}
-
-const AlbumDisplay = ({ album, url }) => {
-    return (
-        <div className="editing-album" >
-            <Link to={`${url}/album/${album.id}`}>
-                <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
-                <p>{album.name}</p>
-            </Link>
+const ArtistDisplay = ({ artists, url }) =>
+    <>
+        { artists.length > 0 && <div className="result-divider">Artists</div>}
+        <div className="editing-row">
+            {
+                artists.map((artist, index) =>
+                    <div key={index}>
+                        <Link to={`${url}/artist/${artist.id}`}>
+                            {
+                                artist.images[0]
+                                    ? <img
+                                        alt="Artist Profile"
+                                        className="profile-img"
+                                        src={artist.images[0].url} />
+                                    : <img
+                                        alt="Aritst with no profile"
+                                        className="profile-img"
+                                        src={defaultImg} />
+                            }
+                        </Link>
+                        <div className="profile-name">
+                            <Link to={`${url}/artist/${artist.id}`}>{artist.name}</Link>
+                        </div>
+                    </div>)
+            }
         </div>
-    )
-}
+    </>
+
+const AlbumDisplay = ({ albums, url }) =>
+    <>
+        {albums.length > 0 && <div className="result-divider">Albums</div>}
+        <div className="editing-row">
+            {albums.map((album, index) =>
+                <div className="editing-album" key={index}>
+                    <Link to={`${url}/album/${album.id}`}>
+                        <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
+                        <p>{album.name}</p>
+                    </Link>
+                </div>
+            )}
+        </div>
+    </>
+
 
 const TrackDisplay = ({ track, accessToken }) => {
     return (
@@ -55,8 +64,7 @@ class Searchbar extends Component {
         tracks: []
     }
 
-
-    searchArtist = async (e) => {
+    searchData = async (e) => {
         const query = e.target.value
         const BASE_URL = "https://api.spotify.com/v1/search?"
         const FETCH_URL = `${BASE_URL}q=${query}&type=track,artist,album&limit=6`
@@ -72,7 +80,6 @@ class Searchbar extends Component {
             const artists = searchResults?.artists?.items
             const tracks = searchResults?.tracks?.items
             const albums = searchResults?.albums?.items
-            console.log('result', tracks)
             this.setState({ artists, albums, tracks })
         }
     }
@@ -86,10 +93,10 @@ class Searchbar extends Component {
                     <input id="searchBar" type="text"
                         placeholder="Search for Songs, Artists or Albums..."
                         value={this.state.query}
-                        onChange={this.searchArtist}
+                        onChange={this.searchData}
                         onKeyPress={event => {
                             if (event.key === 'Enter') {
-                                this.searchArtist()
+                                this.searchData()
                             }
                         }} />
                 </div>
@@ -101,23 +108,8 @@ class Searchbar extends Component {
                         )
                     }
                 </div>
-                {artists.length > 0 && <div className="result-divider">Artists</div>}
-                <div className="row">
-                    {
-                        artists.map((artist, index) =>
-                            <ArtistDisplay key={index} artist={artist} url={url} />
-                        )
-
-                    }
-                </div>
-                {albums.length > 0 && <div className="result-divider">Albums</div>}
-                <div className="editing-row">
-                    {
-                        albums.map((album, index) =>
-                            <AlbumDisplay key={index} album={album} url={url} />
-                        )
-                    }
-                </div>
+                <ArtistDisplay artists={artists} url={url} />
+                <AlbumDisplay albums={albums} url={url} />
 
             </div>
         );
