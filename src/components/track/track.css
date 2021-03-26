@@ -9,10 +9,12 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	background-color: var(--track-bg-color);
+	color: var(--main-tx-color);
 }
 
 .album-tracks:hover {
-	background-color: var(--lighter-bg-color);
+	background-color: var(--track-hover-color);
 }
 .album-tracks:hover .album-tracks-playButton {
 	display: inline-block;
@@ -30,21 +32,18 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	/* color: var(--main-tx-color); */
-    color: black;
+	color: var(--main-tx-color);
 }
 .album-tracks-title0,
 .album-tracks-index0 {
-	/* color: var(--header-tx-color); */
-    color: black;
+	color: var(--main-tx-color);
 }
-.tracks-artist{
+.tracks-artist {
 	font-size: 14px;
 }
 
 .album-tracks-index {
-	/* color: var(--header-tx-color); */
-    color: black;
+	color: var(--main-tx-color);
 	display: inline-block;
 }
 

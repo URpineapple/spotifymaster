@@ -7,14 +7,11 @@ import MyPlaylist from '../Playlist/MyPlaylist'
 import { connect } from 'react-redux';
 
 class ArtistProfile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            albums: [],
-            playlists: [],
-            toptracks: [],
-            artist: null,
-        }
+    state = {
+        albums: [],
+        playlists: [],
+        toptracks: [],
+        artist: null,
     }
 
     componentDidMount() {

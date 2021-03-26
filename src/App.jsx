@@ -51,15 +51,10 @@ class App extends Component {
         return (
             <div>
                 {accessToken
-                    ? <div className="App">
+                    ? <div className="App dark" id="App">
                         <Router>
                             <Navbar />
                             <Switch>
-                                {/* <Route exact path="/" render={() => <SearchBarComponent />} /> */}
-                                {/* <Route exact path="/artist/:artistId" render={(props) =>
-                                    <ArtistProfile {...props} accessToken={this.state.accessToken} />}
-                                />
-                                 */}
                                 <Route exact path="/" render={() => <MyPage accessToken={accessToken} />}
                                 />
                                 <Route path="/playlist/:playlistId" render={(props) =>

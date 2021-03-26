@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PlalistTrack from './PlaylistTrack'
 import defaultImg from '../images/defaultImg.jpg'
 import { Link } from "react-router-dom";
+import './playlist.css';
 
 class PlaylistPage extends Component {
     state = {

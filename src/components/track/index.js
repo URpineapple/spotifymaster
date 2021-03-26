@@ -52,7 +52,7 @@ class Track extends Component {
     durationCovert = (time) => {
         let min = Math.round((time / 1000) / 60)
         let sec = Math.round((time / 1000) % 60)
-        sec = sec < 9 ? 0 + sec.toString() : sec
+        sec = sec <= 9 ? 0 + sec.toString() : sec
         return min + ':' + sec
     }
 
@@ -69,7 +69,7 @@ class Track extends Component {
                             <i className="fa fa-volume-up"></i>
                         </div>
                         : <div className="album-tracks-index">
-                            {0 + 1}
+                            {this?.props?.index + 1}
                         </div>
                     }
                     <div className="album-tracks-playButton">{

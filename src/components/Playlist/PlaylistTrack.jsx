@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { playAudio, pauseAudio, switchAudio } from '../../actions'
-
+import './playlist.css';
 
 class PlaylistTrack extends Component {
     state = {
@@ -46,22 +46,22 @@ class PlaylistTrack extends Component {
     render() {
         const { track, index } = this.props
         return (
-            <div id={`${track.name}${index}`} className="row album-tracks">
+            <div id={`${track.name}${index}`} className="row playlist-tracks">
                 <div className="col-1">
                     {this.isPlaying(track.preview_url, index)
-                        ? <div className="album-tracks-index">
+                        ? <div className="playlist-tracks-index">
                             <i className="fa fa-volume-up"></i>
                         </div>
-                        : <div className="album-tracks-index">
+                        : <div className="playlist-tracks-index">
                             {index + 1}
                         </div>
                     }
-                    <div className="album-tracks-playButton">{
+                    <div className="playlist-tracks-playButton">{
                         track.preview_url == null
-                            ? <div className="album-tracks-play--disable">
+                            ? <div className="playlist-tracks-play--disable">
                                 <i className="far fa-times-circle"></i>
                             </div>
-                            : <div className="album-tracks-play">
+                            : <div className="playlist-tracks-play">
                                 {this.isPlaying(track.preview_url, index)
                                     ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
                                     : <i className="far fa-play-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
@@ -70,8 +70,8 @@ class PlaylistTrack extends Component {
                     }
                     </div>
                 </div>
-                <div className="col-10 album-tracks-title">{track.name}</div>
-                <div className="col-1 album-tracks-add">
+                <div className="col-10 playlist-tracks-title">{track.name}</div>
+                <div className="col-1 playlist-tracks-add">
                     <i className="fa fa-times" onClick={() => this.props.deleteTrack(track.uri, index)}></i>
                 </div>
             </div>

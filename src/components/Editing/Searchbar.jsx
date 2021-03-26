@@ -4,12 +4,19 @@ import React, { Component } from 'react';
 import Track from '../track';
 import { withRouter } from "react-router";
 
-const ArtistDisplay = ({ artists, url }) =>
+const ArtistDisplay = ({ artists, url, showMoreArtists, showArtistsOnly }) =>
     <>
-        { artists.length > 0 && <div className="result-divider">Artists</div>}
+        { artists?.length > 0 &&
+            <div className="result-divider">
+                <span className="title">Artists</span>
+                {!showArtistsOnly &&
+                    <span className="showMore" onClick={showMoreArtists}>See More</span>
+                }
+            </div>
+        }
         <div className="editing-row">
             {
-                artists.map((artist, index) =>
+                artists?.map((artist, index) =>
                     <div key={index}>
                         <Link to={`${url}/artist/${artist.id}`}>
                             {
@@ -32,11 +39,18 @@ const ArtistDisplay = ({ artists, url }) =>
         </div>
     </>
 
-const AlbumDisplay = ({ albums, url }) =>
+const AlbumDisplay = ({ albums, url, showMoreAlbums, showAlbumsOnly }) =>
     <>
-        {albums.length > 0 && <div className="result-divider">Albums</div>}
+        {albums?.length > 0 &&
+            <div className="result-divider">
+                <span className="title">Albums</span>
+                {!showAlbumsOnly &&
+                    <span className="showMore" onClick={showMoreAlbums}>See More</span>
+                }
+            </div>
+        }
         <div className="editing-row">
-            {albums.map((album, index) =>
+            {albums?.map((album, index) =>
                 <div className="editing-album" key={index}>
                     <Link to={`${url}/album/${album.id}`}>
                         <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
@@ -48,28 +62,52 @@ const AlbumDisplay = ({ albums, url }) =>
     </>
 
 
-const TrackDisplay = ({ track, accessToken }) => {
-    return (
-        <div className="col-12" >
-            <Track index={0} track={track} accessToken={accessToken} draggable="true" />
+const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly }) =>
+    <>
+        {tracks?.length > 0 &&
+            <div className="result-divider">
+                <span className="title">Tracks</span>
+                {!showTracksOnly &&
+                    <span className="showMore" onClick={showMoreTracks}>See More</span>
+                }
+            </div>}
+        <div className="row">
+            {
+                tracks?.map((track, index) =>
+                    <div className="col-12" key={index}>
+                        <Track index={index} track={track} accessToken={accessToken} draggable="true" />
+                    </div>
+                )
+            }
         </div>
-    )
-}
+    </>
+
+const myXOR = (foo, bar) => (foo && !bar) || (!foo && bar)
+const BASE_URL = "https://api.spotify.com/v1/search?";
 
 class Searchbar extends Component {
     state = {
         query: '',
         artists: [],
         albums: [],
-        tracks: []
+        tracks: [],
+        showTracksOnly: false,
+        showAlbumsOnly: false,
+        showArtistsOnly: false,
+        showAll: true
     }
 
     searchData = async (e) => {
         const query = e.target.value
-        const BASE_URL = "https://api.spotify.com/v1/search?"
         const FETCH_URL = `${BASE_URL}q=${query}&type=track,artist,album&limit=6`
 
-        this.setState({ query })
+        this.setState({
+            query,
+            showTracksOnly: false,
+            showAlbumsOnly: false,
+            showArtistsOnly: false,
+            showAll: true
+        })
         if (query) {
             const artistResponse = await fetch(FETCH_URL, {
                 headers: { 'Authorization': 'Bearer ' + this.props.accessToken },
@@ -84,9 +122,43 @@ class Searchbar extends Component {
         }
     }
 
+    showMoreTracks = async () => {
+        const FETCH_URL = `${BASE_URL}q=${this.state.query}&type=track&limit=50`
+        const response = await fetch(FETCH_URL, {
+            headers: { 'Authorization': 'Bearer ' + this.props.accessToken },
+            method: 'GET'
+        })
+        const searchResults = await response.json()
+        const tracks = searchResults?.tracks?.items
+        this.setState({ tracks, showTracksOnly: true, showAll: false })
+
+    }
+
+    showMoreArtists = async () => {
+        const FETCH_URL = `${BASE_URL}q=${this.state.query}&type=artist&limit=50`
+        const response = await fetch(FETCH_URL, {
+            headers: { 'Authorization': 'Bearer ' + this.props.accessToken },
+            method: 'GET'
+        })
+        const searchResults = await response.json()
+        const artists = searchResults?.artists?.items
+        this.setState({ artists, showArtistsOnly: true, showAll: false })
+    }
+
+    showMoreAlbums = async () => {
+        const FETCH_URL = `${BASE_URL}q=${this.state.query}&type=album&limit=50`
+        const response = await fetch(FETCH_URL, {
+            headers: { 'Authorization': 'Bearer ' + this.props.accessToken },
+            method: 'GET'
+        })
+        const searchResults = await response.json()
+        const albums = searchResults?.albums?.items
+        this.setState({ albums, showAlbumsOnly: true, showAll: false })
+    }
+
     render() {
         const { url } = this.props.match;
-        const { tracks, artists, albums } = this.state
+        const { tracks, artists, albums, showTracksOnly, showAlbumsOnly, showArtistsOnly, showAll } = this.state
         return (
             <div id="main" className="container">
                 <div>
@@ -94,23 +166,32 @@ class Searchbar extends Component {
                         placeholder="Search for Songs, Artists or Albums..."
                         value={this.state.query}
                         onChange={this.searchData}
-                        onKeyPress={event => {
-                            if (event.key === 'Enter') {
+                        onKeyPress={e => {
+                            if (e.key === 'Enter') {
                                 this.searchData()
                             }
                         }} />
                 </div>
-                {tracks.length > 0 && <div className="result-divider">Songs</div>}
-                <div className="row">
-                    {
-                        tracks.map((track, index) =>
-                            <TrackDisplay key={index} track={track} accessToken={this.props.accessToken} />
-                        )
-                    }
-                </div>
-                <ArtistDisplay artists={artists} url={url} />
-                <AlbumDisplay albums={albums} url={url} />
+                {myXOR(showTracksOnly, showAll) &&
+                    <TrackDisplay tracks={tracks}
+                        accessToken={this.props.accessToken}
+                        showMoreTracks={this.showMoreTracks}
+                        showTracksOnly={showTracksOnly}
 
+                    />
+                }
+                {myXOR(showArtistsOnly, showAll) &&
+                    <ArtistDisplay artists={artists} url={url}
+                        showMoreArtists={this.showMoreArtists}
+                        showArtistsOnly={showArtistsOnly}
+                    />
+                }
+                {myXOR(showAlbumsOnly, showAll) &&
+                    <AlbumDisplay albums={albums} url={url}
+                        showMoreAlbums={this.showMoreAlbums}
+                        showAlbumsOnly={showAlbumsOnly}
+                    />
+                }
             </div>
         );
     }

@@ -8,23 +8,36 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	background-color: #fff;
-	color: #111;
+	background-color: var(--editing-left-bg);
+	color: var(--main-tx-color);
 	overflow-x: hidden;
 	padding-top: 60px;
-	/* transition: 0.5s; */
+}
+
+.left a,
+.left a:hover {
+	color: currentColor;
 }
 
 .right {
 	margin-left: 50vw;
 }
 .result-divider {
-	color: #111;
+	color: var(--main-tx-color);
 	font-weight: bold;
 	margin-top: 25px;
 	margin-bottom: 10px;
-	text-align: left;
+	display: flex;
+	justify-content: space-between;
+}
+.result-divider .title {
 	font-size: 20px;
+}
+.result-divider .showMore {
+	cursor: pointer;
+}
+.result-divider .showMore:hover {
+	text-decoration: underline;
 }
 .editing-row {
 	display: grid;
