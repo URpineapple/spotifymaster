@@ -56,12 +56,24 @@ class Track extends Component {
         return min + ':' + sec
     }
 
+    addSongtoPlaylist = async (trackUri, playlistId) => {
+        const accessToken = this.props.accessToken;
+        const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`
+        let response = await fetch(URL, {
+            headers: { 'Authorization': 'Bearer ' + accessToken },
+            method: 'POST',
+        })
+    }
+
+
     render() {
-        const { name, previewUrl, spotifyURI, duration_ms, artists } = this.props.track
+        const { name, previewUrl, uri, duration_ms, artists } = this.props.track
+        const {playlistId, draggable} = this.props
+        // console.log("this.props.playlistId", playlistId)
         return (
             <div id={`${name}`}
                 className="row album-tracks"
-                draggable={this.props.draggable}
+                draggable={draggable}
                 onDragStart={e => this.dragTrack(e)}>
                 <div className="col-1">
                     {this.props.playingUrl == previewUrl && previewUrl
@@ -101,8 +113,7 @@ class Track extends Component {
                     {this.durationCovert(duration_ms)}
                 </div>
                 <div className="col-1 album-tracks-add">
-                    <i id={spotifyURI} className="fa fa-plus" onClick={event => this.showPlaylist(event.target.id)}></i>
-
+                    <i className="fa fa-plus" onClick={e => this.addSongtoPlaylist(uri, playlistId)}></i>
                 </div>
             </div>
         )

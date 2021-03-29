@@ -78,6 +78,7 @@ class PlaylistPage extends Component {
     }
 
     addTrack = async (trackUri) => {
+        console.log('playlist-trackUri', trackUri)
         const accessToken = this.props.accessToken
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`

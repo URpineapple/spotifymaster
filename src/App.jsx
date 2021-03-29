@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './App.css'
 import './styles/tablet.css'
 import queryString from 'query-string'
-import ArtistProfile from './components/Artist/ArtistProfile'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PlaylistPage from './components/Playlist/PlaylistPage'

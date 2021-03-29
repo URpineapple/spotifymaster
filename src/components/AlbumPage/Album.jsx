@@ -30,6 +30,7 @@ class Album extends Component {
     }
 
     render() {
+        const { playlistId, pathname } = this.props
         const { album, tracks } = this.state;
         return (
             <div className="container album">
@@ -49,7 +50,7 @@ class Album extends Component {
                     </div>
                     {
                         tracks.map((track, index) =>
-                            <Track key={index} index={index} track={track} accessToken={this.props.accessToken} />
+                            <Track key={index} index={index} track={track} accessToken={this.props.accessToken} playlistId={playlistId} />
                         )
                     }
                 </div>

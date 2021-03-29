@@ -15,6 +15,7 @@
 	--track-bg-color: #fff;
 	--switch-bg-color: #191414;
 	--slider-color: #edfcf2;
+	--lheader-tx-color: #191414;
 }
 .dark {
 	--main-bg-color: #191414;
@@ -31,6 +32,7 @@
 	--track-bg-color: #000;
 	--switch-bg-color: #edfcf2;
 	--slider-color: #271f1f;
+	--lheader-tx-color: #b7b7b7;
 }
 body * {
 	font-family: Nunito;
@@ -63,6 +65,7 @@ a {
 	border-radius: 50px;
 	border: none;
 	outline: none;
+	margin-top: 60px;
 	padding: 5px 15px 5px 15px;
 	background-color: var(--main-tx-color);
 	color: var(--main-bg-color);
@@ -144,12 +147,7 @@ input:-webkit-autofill {
 }
 
 .artistProfile {
-	position: absolute;
-	top: 30px;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	overflow-y: scroll;
+
 }
 
 .profile {
@@ -163,9 +161,7 @@ input:-webkit-autofill {
 
 .profile-info {
 	text-align: left;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	max-width: 50%;
 }
 
 .profile-artist {
@@ -174,8 +170,8 @@ input:-webkit-autofill {
 }
 
 .profile-artist-img {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	border-radius: 100px;
 	object-fit: cover;
 }
@@ -199,8 +195,10 @@ input:-webkit-autofill {
 	color: var(--main-tx-color);
 }
 
-.profile-info-name {
-	font-size: 70px;
+.profile-info-name{
+	word-break: break-all;
+	font-size: 40px;
+	font-weight: bold;
 }
 
 .profile-info-followers {
@@ -240,7 +238,8 @@ input:-webkit-autofill {
 }
 
 .nav-back {
-	padding: 0 20px;
+	cursor: pointer;
+	margin: 0 20px;
 }
 
 .nav-back a {
@@ -402,6 +401,7 @@ input:-webkit-autofill {
 
 /*album*/
 .album {
+	margin-top: 60px;
 	margin-bottom: 50px;
 }
 .album-cover {
@@ -415,7 +415,7 @@ input:-webkit-autofill {
 .album-info-year {
 	font-size: 20px;
 	text-align: left;
-	color: var(--header-tx-color);
+	color: var(--lheader-tx-color);
 }
 
 .album-info-name {

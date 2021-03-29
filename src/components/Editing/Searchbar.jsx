@@ -62,7 +62,7 @@ const AlbumDisplay = ({ albums, url, showMoreAlbums, showAlbumsOnly }) =>
     </>
 
 
-const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly }) =>
+const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId }) =>
     <>
         {tracks?.length > 0 &&
             <div className="result-divider">
@@ -75,7 +75,7 @@ const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly }) =
             {
                 tracks?.map((track, index) =>
                     <div className="col-12" key={index}>
-                        <Track index={index} track={track} accessToken={accessToken} draggable="true" />
+                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId} />
                     </div>
                 )
             }
@@ -94,7 +94,8 @@ class Searchbar extends Component {
         showTracksOnly: false,
         showAlbumsOnly: false,
         showArtistsOnly: false,
-        showAll: true
+        showAll: true,
+        playlistId: ''    
     }
 
     searchData = async (e) => {
@@ -177,7 +178,7 @@ class Searchbar extends Component {
                         accessToken={this.props.accessToken}
                         showMoreTracks={this.showMoreTracks}
                         showTracksOnly={showTracksOnly}
-
+                        playlistId={this.props.playlistId}
                     />
                 }
                 {myXOR(showArtistsOnly, showAll) &&

@@ -1,0 +1,25 @@
+.album-titlerow {
+	font-size: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 10px;
+	font-weight: bold;
+}
+.album-titlerow .showAll {
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.album-titlerow .showAll:hover {
+	text-decoration: underline;
+}
+.album-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-gap: 15px;
+	padding: 0 10px;
+}
+.artist-album img {
+	max-width: 100%;
+}
