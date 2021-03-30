@@ -50,7 +50,7 @@ class Album extends Component {
                     </div>
                     {
                         tracks.map((track, index) =>
-                            <Track key={index} index={index} track={track} accessToken={this.props.accessToken} playlistId={playlistId} />
+                            <Track key={index} index={index} track={track} draggable="true" accessToken={this.props.accessToken} playlistId={playlistId} />
                         )
                     }
                 </div>

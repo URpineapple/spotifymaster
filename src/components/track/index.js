@@ -5,14 +5,11 @@ import { playAudio, pauseAudio, switchAudio, getURI } from '../../actions'
 import './track.css';
 
 class Track extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+    state = {
             playingUrl: '',
             audio: null
         }
         // this.showPlaylist = this.showPlaylist.bind(this)
-    }
 
     handlePlay(previewUrl) {
         if (!this.props.playing) {
@@ -63,6 +60,7 @@ class Track extends Component {
             headers: { 'Authorization': 'Bearer ' + accessToken },
             method: 'POST',
         })
+        window.location.reload();
     }
 
 
@@ -71,7 +69,7 @@ class Track extends Component {
         const {playlistId, draggable} = this.props
         // console.log("this.props.playlistId", playlistId)
         return (
-            <div id={`${name}`}
+            <div id={name}
                 className="row album-tracks"
                 draggable={draggable}
                 onDragStart={e => this.dragTrack(e)}>

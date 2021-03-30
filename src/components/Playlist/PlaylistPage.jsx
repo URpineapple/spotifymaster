@@ -15,7 +15,12 @@ class PlaylistPage extends Component {
     }
 
     componentDidMount() {
-        this.getPlaylistItem()
+        const { items, name, coverURL } = this.props
+        if (items && name && coverURL) {
+            this.setState(items, name, coverURL)
+        } else {
+            this.getPlaylistItem()
+        }
     }
 
     changePlayingIndex = (index) => {
@@ -23,19 +28,27 @@ class PlaylistPage extends Component {
     }
 
     getPlaylistItem = async () => {
-        const accessToken = this.props.accessToken
+        const accessToken = JSON.parse(localStorage.getItem('token'))
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
-        const BASE_URL = `https://api.spotify.com/v1/playlists/${playlistId}`
-        let playlistResponse = await fetch(BASE_URL, {
-            headers: { 'Authorization': 'Bearer ' + accessToken },
-            method: 'GET'
-        })
-        let playlistResult = await playlistResponse.json()
+        let playlistData;
+        if (localStorage.getItem(`playlist${playlistId}`)) {
+            const storedPlaylist = localStorage.getItem(`playlist${playlistId}`)
+            playlistData = JSON.parse(storedPlaylist)
+        }
+        else {
+            const BASE_URL = `https://api.spotify.com/v1/playlists/${playlistId}`
+            let playlistResponse = await fetch(BASE_URL, {
+                headers: { 'Authorization': 'Bearer ' + accessToken },
+                method: 'GET'
+            })
+            playlistData = await playlistResponse.json()
+            localStorage.setItem(`playlist${playlistId}`, JSON.stringify(playlistData))
+        }
 
         this.setState({
-            items: playlistResult.tracks ? playlistResult.tracks.items : [],
-            name: playlistResult.name,
-            coverURL: playlistResult?.images?.length > 0 ? playlistResult.images[0].url : ''
+            items: playlistData.tracks ? playlistData.tracks.items : [],
+            name: playlistData.name,
+            coverURL: playlistData?.images?.length > 0 ? playlistData.images[0].url : ''
         })
     }
 
@@ -78,14 +91,12 @@ class PlaylistPage extends Component {
     }
 
     addTrack = async (trackUri) => {
-        console.log('playlist-trackUri', trackUri)
         const accessToken = this.props.accessToken
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         const URL = `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${trackUri}`
         let response = await fetch(URL, {
             headers: { 'Authorization': 'Bearer ' + accessToken },
-            method: 'POST',
-            // mode: 'no-cors'
+            method: 'POST'
         })
         this.getPlaylistItem()
     }
@@ -105,7 +116,7 @@ class PlaylistPage extends Component {
         const { items } = this.state
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         return (
-            <div className="container playlistpage" onDrop={e => this.dropTrack(e)} onDragOver={(e) => this.allowDrop(e)}>
+            <div className="container playlistpage" id={playlistId} onDrop={e => this.dropTrack(e)} onDragOver={(e) => this.allowDrop(e)}>
                 <div className="row playlist-initial">
                     <div className="col-12 col-md-3 playlist-initial-cover">
                         {this.state.coverURL

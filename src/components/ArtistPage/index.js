@@ -106,7 +106,7 @@ class ArtistProfile extends Component {
                         <div className="row profile-toptracks-title">Popular</div>
                         {
                             toptracks.map((toptrack, index) =>
-                                <Track key={index} index={index} track={toptrack} accessToken={this.props.accessToken} />)
+                                <Track key={index} index={index} track={toptrack} draggable="true" accessToken={this.props.accessToken} />)
                         }
                     </div>
                     <div className="album-titlerow">

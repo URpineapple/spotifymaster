@@ -62,7 +62,7 @@ const AlbumDisplay = ({ albums, url, showMoreAlbums, showAlbumsOnly }) =>
     </>
 
 
-const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId }) =>
+const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId}) =>
     <>
         {tracks?.length > 0 &&
             <div className="result-divider">
@@ -75,7 +75,7 @@ const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, pla
             {
                 tracks?.map((track, index) =>
                     <div className="col-12" key={index}>
-                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId} />
+                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId}/>
                     </div>
                 )
             }
@@ -158,6 +158,7 @@ class Searchbar extends Component {
     }
 
     render() {
+        console.log('PlaylistId', this.props.playlistId)
         const { url } = this.props.match;
         const { tracks, artists, albums, showTracksOnly, showAlbumsOnly, showArtistsOnly, showAll } = this.state
         return (

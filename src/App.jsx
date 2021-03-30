@@ -8,41 +8,45 @@ import PlaylistPage from './components/Playlist/PlaylistPage'
 import MyPage from './components/Profile/MyPage'
 import EditingPlaylist from './components/Editing';
 
+const LoginPage = () =>
+    <div className="login">
+        <div className="login-btn">
+            <div className="login-btn-text">PlaylistPro</div>
+            <button
+                onClick={() => {
+                    window.location = window.location.href.includes('localhost')
+                        ? "http://localhost:8888/login"
+                        : "https://musicmasters-backend.herokuapp.com/login"
+                }} >
+                Sign In
+            </button>
+        </div>
+    </div>
+
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            query: '',
-            artists: null,
-            accessToken: '',
-        }
+    state = {
+        query: '',
+        artists: null,
+        accessToken: '',
+    }
+
+    setToken = (userToken) => {
+        localStorage.setItem('token', JSON.stringify(userToken));
+    }
+
+    getToken = () => {
+        const tokenString = localStorage.getItem('token');
+        const userToken = JSON.parse(tokenString);
+        const parsed = queryString.parse(window.location.search);
+        const accessToken = userToken ? userToken : parsed.access_token
+        if (!accessToken)
+            return;
+        this.setToken(accessToken)
+        this.setState({ accessToken })
     }
 
     componentDidMount() {
-        const parsed = queryString.parse(window.location.search);
-        this.setState({
-            accessToken: parsed.access_token
-        })
-        let token = this.state.accessToken
-        if (!token)
-            return;
-    }
-
-    searchArtist = async (e) => {
-        const BASE_URL = "https://api.spotify.com/v1/search?"
-        let FETCH_URL = `${BASE_URL}q=${e}&type=artist&limit=8`
-
-        this.setState({ query: e })
-        if (e) {
-            const artistResponse = await fetch(FETCH_URL, {
-                headers: { 'Authorization': 'Bearer ' + this.state.accessToken },
-                method: 'GET'
-            })
-            const artistResults = await artistResponse.json()
-
-            const artists = artistResults.artists.items
-            this.setState({ artists })
-        }
+        this.getToken()
     }
 
     render() {
@@ -65,20 +69,11 @@ class App extends Component {
                             </Switch>
                         </Router>
                     </div>
-                    : <div className="login">
-                        <div className="login-btn">
-                            <div className="login-btn-text">PlaylistPro</div>
-                            <button
-                                onClick={() => { window.location = window.location.href.includes('localhost') ? "http://localhost:8888/login" : "https://musicmasters-backend.herokuapp.com/login" }}>
-                                Sign In
-                            </button>
-                        </div>
-                    </div>
+                    : <LoginPage />
                 }
             </div>
         )
     }
 }
-
 
 export default App;

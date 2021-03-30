@@ -10,7 +10,6 @@ class PlaylistTrack extends Component {
         audio: null
     }
 
-
     handlePlay(previewUrl, index) {
         if (!this.props.playing) {
             this.playSong(previewUrl, index)
