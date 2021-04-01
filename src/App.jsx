@@ -31,14 +31,15 @@ class App extends Component {
     }
 
     setToken = (userToken) => {
-        localStorage.setItem('token', JSON.stringify(userToken));
+        sessionStorage.setItem('token', JSON.stringify(userToken));
     }
 
     getToken = () => {
-        const tokenString = localStorage.getItem('token');
+        const tokenString = sessionStorage.getItem('token');
         const userToken = JSON.parse(tokenString);
         const parsed = queryString.parse(window.location.search);
         const accessToken = userToken ? userToken : parsed.access_token
+        console.log(accessToken)
         if (!accessToken)
             return;
         this.setToken(accessToken)

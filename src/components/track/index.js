@@ -6,10 +6,9 @@ import './track.css';
 
 class Track extends Component {
     state = {
-            playingUrl: '',
-            audio: null
-        }
-        // this.showPlaylist = this.showPlaylist.bind(this)
+        playingUrl: '',
+        audio: null
+    }
 
     handlePlay(previewUrl) {
         if (!this.props.playing) {
@@ -60,14 +59,12 @@ class Track extends Component {
             headers: { 'Authorization': 'Bearer ' + accessToken },
             method: 'POST',
         })
-        window.location.reload();
+        this.props.updatePlaylist()
     }
-
 
     render() {
         const { name, previewUrl, uri, duration_ms, artists } = this.props.track
-        const {playlistId, draggable} = this.props
-        // console.log("this.props.playlistId", playlistId)
+        const { playlistId, draggable } = this.props
         return (
             <div id={name}
                 className="row album-tracks"
@@ -111,7 +108,7 @@ class Track extends Component {
                     {this.durationCovert(duration_ms)}
                 </div>
                 <div className="col-1 album-tracks-add">
-                    <i className="fa fa-plus" onClick={e => this.addSongtoPlaylist(uri, playlistId)}></i>
+                    <i className="fa fa-plus" onClick={() => this.addSongtoPlaylist(uri, playlistId)}></i>
                 </div>
             </div>
         )

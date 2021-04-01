@@ -36,7 +36,8 @@ class MyPage extends Component {
             method: 'GET'
         })
         let userResult = await userResponse.json()
-        this.setState({ profileUrl: userResult.images[0].url, userID: userResult.id })
+        let profileUrl = userResult.images ? userResult.images[0].url : defaultImg
+        this.setState({ profileUrl, userID: userResult?.id })
     }
 
     showNewPlaylist = () => {

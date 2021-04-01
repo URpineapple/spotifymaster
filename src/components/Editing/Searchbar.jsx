@@ -62,7 +62,7 @@ const AlbumDisplay = ({ albums, url, showMoreAlbums, showAlbumsOnly }) =>
     </>
 
 
-const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId}) =>
+const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId, updatePlaylist}) =>
     <>
         {tracks?.length > 0 &&
             <div className="result-divider">
@@ -75,7 +75,7 @@ const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, pla
             {
                 tracks?.map((track, index) =>
                     <div className="col-12" key={index}>
-                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId}/>
+                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId} updatePlaylist={updatePlaylist}/>
                     </div>
                 )
             }
@@ -132,7 +132,6 @@ class Searchbar extends Component {
         const searchResults = await response.json()
         const tracks = searchResults?.tracks?.items
         this.setState({ tracks, showTracksOnly: true, showAll: false })
-
     }
 
     showMoreArtists = async () => {
@@ -158,7 +157,6 @@ class Searchbar extends Component {
     }
 
     render() {
-        console.log('PlaylistId', this.props.playlistId)
         const { url } = this.props.match;
         const { tracks, artists, albums, showTracksOnly, showAlbumsOnly, showArtistsOnly, showAll } = this.state
         return (
@@ -180,6 +178,7 @@ class Searchbar extends Component {
                         showMoreTracks={this.showMoreTracks}
                         showTracksOnly={showTracksOnly}
                         playlistId={this.props.playlistId}
+                        updatePlaylist={this.props.updatePlaylist}
                     />
                 }
                 {myXOR(showArtistsOnly, showAll) &&

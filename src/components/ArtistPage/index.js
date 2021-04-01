@@ -73,8 +73,8 @@ class ArtistProfile extends Component {
     }
 
     render() {
-        const { playlistId, pathname } = this.props
-        const { toptracks, albums, artist } = this.state
+        const { pathname, accessToken, playlistId } = this.props;
+        const { toptracks, albums, artist } = this.state;
         return (
             <>
                 <div className="artistProfile">
@@ -106,7 +106,13 @@ class ArtistProfile extends Component {
                         <div className="row profile-toptracks-title">Popular</div>
                         {
                             toptracks.map((toptrack, index) =>
-                                <Track key={index} index={index} track={toptrack} draggable="true" accessToken={this.props.accessToken} />)
+                                <Track key={index}
+                                    index={index}
+                                    track={toptrack}
+                                    draggable="true"
+                                    accessToken={accessToken}
+                                    playlistId={playlistId}
+                                    updatePlaylist={this.props.updatePlaylist} />)
                         }
                     </div>
                     <div className="album-titlerow">
@@ -116,7 +122,7 @@ class ArtistProfile extends Component {
                     <div className="album-row">
                         {
                             albums.map((album, index) =>
-                                <AlbumDisplay key={index} album={album} url={pathname} />)
+                                <AlbumDisplay key={index} album={album} url={pathname}/>)
                         }
                     </div>
                 </div>
