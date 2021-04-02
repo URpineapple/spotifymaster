@@ -2,24 +2,26 @@
 	padding-top: 50px;
 }
 
-.left {
+#left {
 	height: 100%;
-	width: 50vw;
+	width: 0vw;
 	position: fixed;
 	top: 0;
 	left: 0;
 	background-color: var(--editing-left-bg);
 	color: var(--main-tx-color);
 	overflow-x: hidden;
+	transition: .5s;
 }
 
-.left a,
-.left a:hover {
+#left a,
+#left a:hover {
 	color: currentColor;
 }
 
-.right {
-	margin-left: 50vw;
+#right {
+	margin-left: 0vw;
+	transition: margin-left .5s;
 }
 .result-divider {
 	color: var(--main-tx-color);

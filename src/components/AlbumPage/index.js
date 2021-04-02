@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Track from '../track'
-
+import TrackHeader from '../track/trackHeader';
 class Album extends Component {
     state = {
         tracks: [],
@@ -44,13 +44,18 @@ class Album extends Component {
                     </div>
                 </div>
                 <div className="tracks-section">
-                    <div className="row album-tracks0">
-                        <div className="col-1 album-tracks-index0">#</div>
-                        <div className="col-11 album-tracks-title0">TITLE</div>
-                    </div>
+                    <TrackHeader />
                     {
                         tracks.map((track, index) =>
-                            <Track key={index} index={index} track={track} draggable="true" accessToken={this.props.accessToken} playlistId={playlistId} updatePlaylist={this.props.updatePlaylist} />
+                            <Track key={index}
+                                index={index}
+                                track={track}
+                                draggable="true"
+                                accessToken={this.props.accessToken}
+                                playlistId={playlistId}
+                                updatePlaylist={this.props.updatePlaylist}
+                                pathname={pathname}
+                            />
                         )
                     }
                 </div>

@@ -39,7 +39,6 @@ class App extends Component {
         const userToken = JSON.parse(tokenString);
         const parsed = queryString.parse(window.location.search);
         const accessToken = userToken ? userToken : parsed.access_token
-        console.log(accessToken)
         if (!accessToken)
             return;
         this.setToken(accessToken)
@@ -62,11 +61,13 @@ class App extends Component {
                                 <Route exact path="/" render={() => <MyPage accessToken={accessToken} />}
                                 />
                                 <Route path="/playlist/:playlistId" render={(props) =>
-                                    <PlaylistPage {...props} accessToken={accessToken} showEditing={true} />}
+                                    <div className="pt50">
+                                        <PlaylistPage {...props} accessToken={accessToken} showEditing={true} />
+                                    </div>
+                                }
                                 />
                                 <Route path="/editing/:playlistId" render={(props) =>
                                     <EditingPlaylist {...props} accessToken={accessToken} />} />
-
                             </Switch>
                         </Router>
                     </div>

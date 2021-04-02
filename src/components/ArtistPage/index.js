@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import defaultImg from '../images/defaultImg.jpg';
 import Track from '../track';
+import TrackHeader from '../track/trackHeader';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import './artist.css';
@@ -24,6 +25,12 @@ class ArtistProfile extends Component {
     componentDidMount() {
         this.getArtistData()
     }
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.match.params.artistId !== prevProps.match.params.artistId) {
+            this.getArtistData()
+        }
+      }
 
     getArtistData = async () => {
         const accessToken = this.props.accessToken
@@ -104,6 +111,7 @@ class ArtistProfile extends Component {
                     }
                     <div className="profile-toptracks">
                         <div className="row profile-toptracks-title">Popular</div>
+                        <TrackHeader />
                         {
                             toptracks.map((toptrack, index) =>
                                 <Track key={index}
@@ -112,7 +120,8 @@ class ArtistProfile extends Component {
                                     draggable="true"
                                     accessToken={accessToken}
                                     playlistId={playlistId}
-                                    updatePlaylist={this.props.updatePlaylist} />)
+                                    updatePlaylist={this.props.updatePlaylist}
+                                    pathname={pathname} />)
                         }
                     </div>
                     <div className="album-titlerow">
@@ -122,7 +131,7 @@ class ArtistProfile extends Component {
                     <div className="album-row">
                         {
                             albums.map((album, index) =>
-                                <AlbumDisplay key={index} album={album} url={pathname}/>)
+                                <AlbumDisplay key={index} album={album} url={pathname} />)
                         }
                     </div>
                 </div>

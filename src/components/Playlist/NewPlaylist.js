@@ -52,8 +52,9 @@ class NewPlaylist extends Component {
         else {
             return (
                 <div className="newPlaylist">
-                    <div className="newPlaylist-exit"><i className="fas fa-times" onClick={() => this.cancelPlaylist()}></i></div>
-                    <div className="newPlaylist-title">Create New Playlist</div>
+                    <div className="newPlaylist-exit">
+                        <i className="fas fa-times" onClick={() => this.cancelPlaylist()}></i>
+                    </div>
                     <div className="newPlaylist-input">
                         <div>Playlist Name</div>
                         <input id="newPlaylist" placeholder="New Playlist" onChange={event => this.handleChange(event)} />

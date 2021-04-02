@@ -1,86 +1,8 @@
-import { Link } from "react-router-dom";
-import defaultImg from '../images/defaultImg.jpg';
 import React, { Component } from 'react';
-import Track from '../track';
 import { withRouter } from "react-router";
-
-const ArtistDisplay = ({ artists, url, showMoreArtists, showArtistsOnly }) =>
-    <>
-        { artists?.length > 0 &&
-            <div className="result-divider">
-                <span className="title">Artists</span>
-                {!showArtistsOnly &&
-                    <span className="showMore" onClick={showMoreArtists}>See More</span>
-                }
-            </div>
-        }
-        <div className="editing-row">
-            {
-                artists?.map((artist, index) =>
-                    <div key={index}>
-                        <Link to={`${url}/artist/${artist.id}`}>
-                            {
-                                artist.images[0]
-                                    ? <img
-                                        alt="Artist Profile"
-                                        className="profile-img"
-                                        src={artist.images[0].url} />
-                                    : <img
-                                        alt="Aritst with no profile"
-                                        className="profile-img"
-                                        src={defaultImg} />
-                            }
-                        </Link>
-                        <div className="profile-name">
-                            <Link to={`${url}/artist/${artist.id}`}>{artist.name}</Link>
-                        </div>
-                    </div>)
-            }
-        </div>
-    </>
-
-const AlbumDisplay = ({ albums, url, showMoreAlbums, showAlbumsOnly }) =>
-    <>
-        {albums?.length > 0 &&
-            <div className="result-divider">
-                <span className="title">Albums</span>
-                {!showAlbumsOnly &&
-                    <span className="showMore" onClick={showMoreAlbums}>See More</span>
-                }
-            </div>
-        }
-        <div className="editing-row">
-            {albums?.map((album, index) =>
-                <div className="editing-album" key={index}>
-                    <Link to={`${url}/album/${album.id}`}>
-                        <img src={album?.images[1]?.url} alt={`cover of ${album.name}`} />
-                        <p>{album.name}</p>
-                    </Link>
-                </div>
-            )}
-        </div>
-    </>
-
-
-const TrackDisplay = ({ tracks, accessToken, showMoreTracks, showTracksOnly, playlistId, updatePlaylist}) =>
-    <>
-        {tracks?.length > 0 &&
-            <div className="result-divider">
-                <span className="title">Tracks</span>
-                {!showTracksOnly &&
-                    <span className="showMore" onClick={showMoreTracks}>See More</span>
-                }
-            </div>}
-        <div className="row">
-            {
-                tracks?.map((track, index) =>
-                    <div className="col-12" key={index}>
-                        <Track index={index} track={track} accessToken={accessToken} draggable="true" playlistId={playlistId} updatePlaylist={updatePlaylist}/>
-                    </div>
-                )
-            }
-        </div>
-    </>
+import ArtistDisplay from './ArtistDisplay';
+import AlbumDisplay from './AlbumDisplay';
+import TrackDisplay from './TrackDisplay';
 
 const myXOR = (foo, bar) => (foo && !bar) || (!foo && bar)
 const BASE_URL = "https://api.spotify.com/v1/search?";
@@ -95,7 +17,7 @@ class Searchbar extends Component {
         showAlbumsOnly: false,
         showArtistsOnly: false,
         showAll: true,
-        playlistId: ''    
+        playlistId: ''
     }
 
     searchData = async (e) => {
@@ -179,6 +101,7 @@ class Searchbar extends Component {
                         showTracksOnly={showTracksOnly}
                         playlistId={this.props.playlistId}
                         updatePlaylist={this.props.updatePlaylist}
+                        pathname={url}
                     />
                 }
                 {myXOR(showArtistsOnly, showAll) &&

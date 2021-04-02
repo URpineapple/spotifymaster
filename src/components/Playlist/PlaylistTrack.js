@@ -42,36 +42,57 @@ class PlaylistTrack extends Component {
         return this.props.playingUrl == previewUrl && previewUrl && index == this.props.playingIndex
     }
 
+    durationCovert = (time) => {
+        let min = Math.round((time / 1000) / 60)
+        let sec = Math.round((time / 1000) % 60)
+        sec = sec <= 9 ? 0 + sec.toString() : sec
+        return min + ':' + sec
+    }
+
     render() {
         const { track, index } = this.props
+        const { name, preview_url, uri, duration_ms, artists } = this.props.track
         return (
             <div id={`${track.name}${index}`} className="row playlist-tracks">
                 <div className="col-1">
-                    {this.isPlaying(track.preview_url, index)
-                        ? <div className="playlist-tracks-index">
-                            <i className="fa fa-volume-up"></i>
-                        </div>
-                        : <div className="playlist-tracks-index">
-                            {index + 1}
-                        </div>
-                    }
+                    <div className="playlist-tracks-index">
+                        {
+                            this.isPlaying(preview_url, index)
+                                ? <i className="fa fa-volume-up"></i>
+                                : index + 1
+                        }
+                    </div>
                     <div className="playlist-tracks-playButton">{
-                        track.preview_url == null
+                        preview_url == null
                             ? <div className="playlist-tracks-play--disable">
                                 <i className="far fa-times-circle"></i>
                             </div>
                             : <div className="playlist-tracks-play">
-                                {this.isPlaying(track.preview_url, index)
-                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
-                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(track.preview_url, index)}></i>
-                                }
+                                <i className={this.isPlaying(preview_url, index)
+                                    ? "far fa-pause-circle"
+                                    : "far fa-play-circle"}
+                                    onClick={() => this.handlePlay(preview_url, index)}>
+                                </i>
                             </div>
                     }
                     </div>
                 </div>
-                <div className="col-10 playlist-tracks-title">{track.name}</div>
-                <div className="col-1 playlist-tracks-add">
-                    <i className="fa fa-times" onClick={() => this.props.deleteTrack(track.uri, index)}></i>
+                <div className="col-9 playlist-tracks-title">
+                    <div>{name}</div>
+                    <div className="playlist-tracks-artist">
+                        {artists.map((artist, i) =>
+                            <span key={i}>
+                                {artist.name}{i != artists.length - 1 && ', '}
+                            </span>
+                        )}
+                    </div>
+                </div>
+                <div className="col-1">
+                    {this.durationCovert(duration_ms)}
+                </div>
+                <div className="col-1 playlist-tracks-add"
+                    onClick={() => this.props.deleteTrack(uri, index)}>
+                    <i className="fa fa-times"></i>
                 </div>
             </div>
         )
@@ -93,6 +114,5 @@ const mapDispatchToProps = (dispatch) => {
         switchAudio: switchAudio
     }, dispatch);
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistTrack)

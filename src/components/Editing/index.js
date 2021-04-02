@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import './editing.css';
-import Searchbar from './Searchbar';
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import PlaylistPage from '../Playlist/PlaylistPage';
-import AlbumPage from '../AlbumPage/Album';
+import AlbumPage from '../AlbumPage';
 import ArtistPage from '../ArtistPage';
+import Searchbar from './Searchbar';
+import defaultImg from '../images/defaultImg.jpg'
 
 class EditingPlaylist extends Component {
     state = {
         items: [],
+        coverURL: ''
     }
 
     componentDidMount() {
+        requestAnimationFrame(()=> {this.showLeftSide()}); 
         this.updatePlaylist()
+    }
+
+    showLeftSide() {
+        document.getElementById("left").style.width = "50vw"
+        document.getElementById("right").style.marginLeft = "50vw"
     }
 
     updatePlaylist = async () => {
@@ -27,7 +35,8 @@ class EditingPlaylist extends Component {
         let playlistResult = await playlistResponse.json()
 
         this.setState({
-            items: playlistResult.tracks ? playlistResult.tracks.items : []
+            items: playlistResult.tracks ? playlistResult.tracks.items : [],
+            coverURL: playlistResult?.images?.length > 0 ? playlistResult.images[0].url : defaultImg
         })
         sessionStorage.setItem(`playlist${playlistId}`, JSON.stringify(playlistResult))
     }
@@ -35,42 +44,45 @@ class EditingPlaylist extends Component {
     render() {
         const pathname = this.props.match.url;
         const playlistId = this.props.match.params.playlistId;
-        const { items } = this.state;
+        const { items, coverURL } = this.state;
         return (
             <div className="editing">
-                <div className="left">
+                <div id="left">
                     <Switch>
-                        <Route path={`${pathname}/album/:albumId`}
-                            render={(props) =>
-                                <AlbumPage {...props}
-                                    accessToken={this.props.accessToken}
-                                    playlistId={playlistId}
-                                    pathname={pathname}
-                                    updatePlaylist={this.updatePlaylist} />}
-                        />
-                        <Route path={`${pathname}/artist/:artistId`}
-                            render={(props) =>
-                                <ArtistPage
-                                    {...props}
-                                    accessToken={this.props.accessToken}
-                                    playlistId={playlistId}
-                                    pathname={pathname}
-                                    updatePlaylist={this.updatePlaylist} />}
-                        />
-                        <Route path={pathname}
+                        <Route exact path={pathname}
                             render={(props) =>
                                 <Searchbar {...props} playlistId={playlistId}
                                     accessToken={this.props.accessToken}
                                     match={this.props.match}
                                     updatePlaylist={this.updatePlaylist} />}
                         />
+                        <Route path={`${pathname}/album/:albumId`}
+                            render={(props) =>
+                                <AlbumPage {...props}
+                                    accessToken={this.props.accessToken}
+                                    playlistId={playlistId}
+                                    pathname={pathname}
+                                    updatePlaylist={this.updatePlaylist}
+                                    pathname={pathname} />}
+                        />
+                        <Route exact path={`${pathname}/artist/:artistId`}
+                            render={(props) =>
+                                <ArtistPage
+                                    {...props}
+                                    accessToken={this.props.accessToken}
+                                    playlistId={playlistId}
+                                    pathname={pathname}
+                                    updatePlaylist={this.updatePlaylist}
+                                    pathname={pathname} />}
+                        />
                     </Switch>
                 </div>
-                <div className="right">
+                <div id="right">
                     <PlaylistPage accessToken={this.props.accessToken}
                         match={this.props.match}
                         showEditing={false}
                         items={items}
+                        coverURL={coverURL}
                         updatePlaylist={this.updatePlaylist}
                     />
                 </div>

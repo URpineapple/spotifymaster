@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { playAudio, pauseAudio, switchAudio, getURI } from '../../actions'
 import './track.css';
+import { Link } from "react-router-dom";
 
 class Track extends Component {
     state = {
@@ -63,15 +64,15 @@ class Track extends Component {
     }
 
     render() {
-        const { name, previewUrl, uri, duration_ms, artists } = this.props.track
-        const { playlistId, draggable } = this.props
+        const { name, preview_url, uri, duration_ms, artists } = this.props.track
+        const { playlistId, draggable, pathname } = this.props
         return (
             <div id={name}
                 className="row album-tracks"
                 draggable={draggable}
                 onDragStart={e => this.dragTrack(e)}>
                 <div className="col-1">
-                    {this.props.playingUrl == previewUrl && previewUrl
+                    {this.props.playingUrl == preview_url && preview_url
                         ? <div className="album-tracks-index">
                             <i className="fa fa-volume-up"></i>
                         </div>
@@ -80,14 +81,14 @@ class Track extends Component {
                         </div>
                     }
                     <div className="album-tracks-playButton">{
-                        previewUrl == null
+                        preview_url == null
                             ? <div className="album-tracks-play--disable">
                                 <i className="far fa-times-circle"></i>
                             </div>
                             : <div className="album-tracks-play">
-                                {this.props.playingUrl == previewUrl
-                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(this.props.previewUrl)}></i>
-                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(this.props.previewUrl)}></i>
+                                {this.props.playingUrl == preview_url
+                                    ? <i className="far fa-pause-circle" onClick={() => this.handlePlay(preview_url)}></i>
+                                    : <i className="far fa-play-circle" onClick={() => this.handlePlay(preview_url)}></i>
                                 }
                             </div>
                     }
@@ -98,7 +99,7 @@ class Track extends Component {
                     <div className="tracks-artist">
                         {artists.map((artist, index) =>
                             <span key={index}>
-                                {artist.name}
+                                <Link to={`${pathname}/artist/${artist.id}`}>{artist.name}</Link>
                                 {index != artists.length - 1 && ', '}
                             </span>
                         )}
@@ -107,8 +108,8 @@ class Track extends Component {
                 <div className="col-1">
                     {this.durationCovert(duration_ms)}
                 </div>
-                <div className="col-1 album-tracks-add">
-                    <i className="fa fa-plus" onClick={() => this.addSongtoPlaylist(uri, playlistId)}></i>
+                <div className="col-1 album-tracks-add" onClick={() => this.addSongtoPlaylist(uri, playlistId)}>
+                    <i className="fa fa-plus"></i>
                 </div>
             </div>
         )

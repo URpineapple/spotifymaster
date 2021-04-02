@@ -61,12 +61,13 @@ a {
 }
 
 #searchBar {
-	width: 80%;
+	width: 520px;
+	max-width: 85%;
 	border-radius: 50px;
 	border: none;
 	outline: none;
 	margin-top: 60px;
-	padding: 5px 15px 5px 15px;
+	padding: 5px 15px;
 	background-color: var(--main-tx-color);
 	color: var(--main-bg-color);
 }
@@ -146,10 +147,6 @@ input:-webkit-autofill {
 	padding-bottom: 15px;
 }
 
-.artistProfile {
-
-}
-
 .profile {
 	display: flex;
 	align-items: center;
@@ -222,9 +219,6 @@ input:-webkit-autofill {
 	color: #b7b7b7;
 	font-weight: bold;
 	font-size: 30px;
-	border-bottom-style: solid;
-	border-color: #262626;
-	border-width: thin;
 }
 
 .nav {
@@ -267,7 +261,6 @@ input:-webkit-autofill {
 	width: 0;
 	height: 0;
 	border: #000 solid 1px;
-
 }
 
 .nav-switch-slider {
@@ -306,23 +299,30 @@ input:-webkit-autofill {
 	transform: translateX(40px);
 }
 
-.nav-profile {
+.nav-button {
 	position: absolute;
 	top: 10px;
-	right: 50px;
+	right: 80px;
+	font-size: 20px;
 	color: var(--main-tx-color);
 	outline: none;
-	border: none;
-	width: 30px;
-	height: 30px;
-	border: solid 2.5px var(--main-tx-color);
-	border-radius: 50px;
+	width: 40px;
+	height: 40px;
+	border: solid 2px var(--main-tx-color);
+	border-radius: 100px;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+	cursor: pointer;
 }
-.nav-profile a,
-.nav-profile a:hover {
+.nav-button:hover {
+	background-color: var(--lighter-bg-color);
+}
+.nav-button.signout{
+	right: 30px;
+}
+.nav-button a,
+.nav-button a:hover {
 	color: var(--main-tx-color);
 	text-decoration: none;
 }
@@ -397,6 +397,10 @@ input:-webkit-autofill {
 
 .color-white {
 	color: var(--main-tx-color);
+}
+
+.pt50{
+	padding-top: 50px;
 }
 
 /*album*/

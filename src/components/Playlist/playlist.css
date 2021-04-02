@@ -98,15 +98,14 @@
 
 /*Playlist Page*/
 .playlistpage {
-	padding-top: 50px;
 	padding-bottom: 30px;
 	min-height: 85vh;
 }
 .playlist-initial {
 	padding-bottom: 20px;
-	border-bottom-style: solid;
+	/* border-bottom-style: solid;
 	border-color: #262626;
-	border-width: thin;
+	border-width: thin; */
 }
 
 .playlist-initial-cover img {
@@ -133,6 +132,7 @@
 	color: var(--header-tx-color);
 }
 .add-section {
+	margin-top: 10px;
 	text-align: left;
 }
 .add-btn {
@@ -252,12 +252,15 @@
 	margin-left: 10px;
 	margin-right: 10px;
 }
+.newPlaylist-exit{
+	cursor: pointer;
+	font-size: 30px;
+}
 
 /*Playlist Tracks*/
 
 .playlist-tracks,
 .playlist-tracks0 {
-	color: white;
 	text-align: left;
 	border-bottom-style: solid;
 	border-color: #262626;
@@ -267,6 +270,9 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+}
+.playlist-tracks-time{
+	text-align: center;
 }
 
 .playlist-tracks:hover {
@@ -323,4 +329,8 @@
 .playlist-tracks-add {
 	cursor: pointer;
 	visibility: hidden;
+}
+
+.playlist-tracks-artist{
+	font-size: 14px;
 }

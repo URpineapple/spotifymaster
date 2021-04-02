@@ -43,7 +43,7 @@ class PlaylistPage extends Component {
         this.setState({
             items: playlistData.tracks ? playlistData.tracks.items : [],
             name: playlistData.name,
-            coverURL: playlistData?.images?.length > 0 ? playlistData.images[0].url : ''
+            coverURL: playlistData?.images?.length > 0 ? playlistData.images[0].url : defaultImg
         })
     }
 
@@ -137,13 +137,14 @@ class PlaylistPage extends Component {
     render() {
         const { showEditing } = this.props
         const items = this.props.items ? this.props.items : this.state.items
+        const coverURL = this.props.coverURL ? this.props.coverURL : this.state.coverURL
         const playlistId = this.props.playlistId ? this.props.playlistId : this.props.match.params.playlistId;
         return (
             <div className="container playlistpage" id={playlistId} onDrop={e => this.dropTrack(e)} onDragOver={(e) => this.allowDrop(e)}>
                 <div className="row playlist-initial">
                     <div className="col-12 col-md-3 playlist-initial-cover">
-                        {this.state.coverURL
-                            ? <img src={this.state.coverURL} alt='playlist-cover' />
+                        {coverURL
+                            ? <img src={coverURL} alt='playlist-cover' />
                             : <img src={defaultImg} alt='playlist-cover' />
                         }
                     </div>
@@ -170,10 +171,23 @@ class PlaylistPage extends Component {
                     </div>
                 </div>
                 {items.length > 0
-                    ? items.map((item, index) =>
-                        <div key={index}>
-                            <PlalistTrack index={index} track={item.track} playingIndex={this.state.playingIndex} changePlayingIndex={this.changePlayingIndex} deleteTrack={this.deleteTrack} />
-                        </div>)
+                    ? <>
+                        <div className="row playlist-tracks0">
+                            <div className="col-1 playlist-tracks-index0">#</div>
+                            <div className="col-9 playlist-tracks-title0">TITLE</div>
+                            <div className="col-1 playlist-tracks-time"><i className="far fa-clock"></i></div>
+                            <div className="col-1"></div>
+                        </div>
+                        {items.map((item, index) =>
+                            <div key={index}>
+                                <PlalistTrack
+                                    index={index}
+                                    track={item.track}
+                                    playingIndex={this.state.playingIndex}
+                                    changePlayingIndex={this.changePlayingIndex}
+                                    deleteTrack={this.deleteTrack} />
+                            </div>)}
+                    </>
                     : <div className="playlist-empty">
                         <div>It's a bit empty here. </div>
                         <div>Let's find some songs for your playlist.</div>
