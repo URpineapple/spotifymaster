@@ -16,7 +16,7 @@ const LoginPage = () =>
                 onClick={() => {
                     window.location = window.location.href.includes('localhost')
                         ? "http://localhost:8888/login"
-                        : "https://playlistpro-spotify.herokuapp.com/login"
+                        : "https://playlistpro-backend.herokuapp.com/login"
                 }} >
                 Sign In
             </button>
