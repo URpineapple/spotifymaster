@@ -29,7 +29,9 @@ export default function Navbar() {
     function logOut() {
         if (window.confirm("Are you sure you want to log out?")) {
             sessionStorage.removeItem('token')
-            window.location.href = "http://localhost:3000"
+            window.location = window.location.href.includes('localhost')
+                        ? "http://localhost:3000"
+                        : "https://playlistpro-spotify.herokuapp.com"
         }
     }
 

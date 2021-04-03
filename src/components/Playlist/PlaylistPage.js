@@ -110,13 +110,13 @@ class PlaylistPage extends Component {
             body: JSON.stringify(param),
             method: 'PUT'
         })
-        this.setState({ isEditing: false, name: this.state.newName }, () => this.getPlaylistItem())
+        this.setState({ isEditing: false, name: this.state.newName }, () => this.updatePlaylist())
     }
 
     keypressHandler = event => {
         if (event.key === "Enter") {
             this.changePlaylistName()
-            this.getPlaylistItem()
+            this.updatePlaylist()
         }
     }
 
@@ -158,7 +158,9 @@ class PlaylistPage extends Component {
                                     onChange={event => this.handleChange(event)}
                                     onKeyPress={event => this.keypressHandler(event)}
                                     autoFocus />
-                                : <div onClick={() => this.setState({ isEditing: true, newName: this.state.name })}>{this.state.name}</div>
+                                : <div onClick={() => this.setState({ isEditing: true, newName: this.state.name })}>
+                                    {this.state.name}
+                                </div>
                             }
                         </div>
                         {showEditing &&
