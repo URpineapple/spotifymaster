@@ -27,9 +27,10 @@ export default function Navbar() {
     }
 
     function logOut() {
-        sessionStorage.removeItem('token')
-        window.location.href = "http://localhost:3000"
-        // window.location.reload()
+        if (window.confirm("Are you sure you want to log out?")) {
+            sessionStorage.removeItem('token')
+            window.location.href = "http://localhost:3000"
+        }
     }
 
     return (
