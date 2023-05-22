@@ -20,7 +20,7 @@
   "scripts": {
     "dev": "react-scripts --openssl-legacy-provider start",
     "start": "serve -s build",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
